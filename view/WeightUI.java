@@ -5,7 +5,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class WeightUI extends Application {
+public class WeightUI extends Application implements UI {
     private Stage stage;
     private Scene scene;
 
