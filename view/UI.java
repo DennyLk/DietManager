@@ -1,5 +1,5 @@
 package view;
 
-public class UI {
-    
+public interface UI {
+    void display();
 }
