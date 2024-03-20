@@ -13,7 +13,6 @@ public class DietModel {
 
     }
 
-
     public ArrayList<Food> getbFoods() {
         return bFoods;
     }
@@ -34,39 +33,36 @@ public class DietModel {
         return fLog;
     }
 
-
     public void setfLog(ArrayList<Log> fLog) {
         this.fLog = fLog;
     }
-
 
     public ArrayList<Log> getwLog() {
         return wLog;
     }
 
-
     public void setwLog(ArrayList<Log> wLog) {
         this.wLog = wLog;
     }
 
-    //method for getting the Food class
+    // method for getting the Food class
     public Food getFood() {
         Food f = null;
         return f;
     }
 
-    public void getAllFoods(){
+    public void getAllFoods() {
         Food.getData();
         bFoods = Food.getbFoods();
         rFoods = Food.getrFoods();
     }
 
-    //method for getting the Log Class
+    // method for getting the Log Class
     public Log getLog() {
         return null;
     }
 
-    public void getAllLogs(){
+    public void getAllLogs() {
         Log.getData();
         fLog = Log.getfLog();
         wLog = Log.getwLog();
@@ -74,5 +70,9 @@ public class DietModel {
 
     public static void logSelectedFood(String foodName) {
         Log.logFood(foodName);
+    }
+
+    public static void addFood(String foodName) {
+        Food.addFood(foodName);
     }
 }

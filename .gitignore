@@ -1,2 +1,8 @@
 # Java compiled bytecode
 *.class
+
+# All files that are usually removed in java projects
+bin/
+target/
+build/
+*.jar
