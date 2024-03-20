@@ -8,9 +8,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import model.DietModel;
 import model.Food;
 
 public class HomeUI implements UI {
@@ -18,7 +18,6 @@ public class HomeUI implements UI {
     private Scene scene;
     private static ComboBox<String> foodsBox = new ComboBox<>();
     private static ComboBox<String> recipeBox = new ComboBox<>();
-
 
     public HomeUI(Stage stage) {
         this.stage = stage;
@@ -42,7 +41,13 @@ public class HomeUI implements UI {
         Label recipeLb = new Label("Recipe Foods:");
         recipeBox.setEditable(false);
 
-        root.getChildren().addAll(info, weight, foodlb, foodsBox, recipeLb, recipeBox);
+        Button intake = new Button("Intake Food");
+        intake.setOnAction(e -> openIntakeUI());
+
+        Button log = new Button("Log");
+        log.setOnAction(e -> logSelectedFood());
+
+        root.getChildren().addAll(info, weight, foodlb, foodsBox, recipeLb, recipeBox, intake, log);
 
         scene = new Scene(root, 750, 600);
         stage.setScene(scene);
@@ -74,4 +79,20 @@ public class HomeUI implements UI {
         }
         recipeBox.setItems(recipeNames);
     }
+
+    public void openIntakeUI() {
+        UI intakeUI = UIFactory.createUI("Intake", stage);
+        intakeUI.display();
+    }
+
+    private void logSelectedFood() {
+        String selectedFood = foodsBox.getSelectionModel().getSelectedItem();
+        String selectedRecipe = recipeBox.getSelectionModel().getSelectedItem();
+        String itemToLog = (selectedFood != null) ? selectedFood : selectedRecipe;
+
+        if (itemToLog != null && !itemToLog.trim().isEmpty()) {
+            DietModel.logSelectedFood(itemToLog);
+        }
+    }
+
 }
