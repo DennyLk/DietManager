@@ -52,10 +52,10 @@ public class Log implements Loader {
 
                 if (data[0].equals("f")) {
                     // Log format --> f,foodName,calories,date
-                    fLog.add(new Log(data[1], data[2], data[3]));
+                    fLog.add(new Log(data[1], null, data[5]));
                 } else if (data[0].equals("w")) {
                     // Log format --> w,weight,date
-                    wLog.add(new Log(data[1], data[2]));
+                    wLog.add(new Log(data[1],  data[2]));
                 }
             }
             bufferedReader.close();
@@ -71,7 +71,7 @@ public class Log implements Loader {
     }
 
     public static void logFood(String foodName) {
-        String logEntry = "f," + foodName + ",100," + java.time.LocalDate.now();
+        String logEntry = "f," + foodName + ","+ java.time.LocalDate.now();
         
         try (FileWriter fw = new FileWriter("src/model/assets/log.csv", true);
              BufferedWriter bw = new BufferedWriter(fw)) {
@@ -83,7 +83,7 @@ public class Log implements Loader {
 
     @Override
     public String toString() {
-        String text = String.format("%s: %s calories - Date: %s", foodName, calories, date);
+        String text = String.format("%s: - Date: %s", foodName, date);
         return text;
     }
 }
