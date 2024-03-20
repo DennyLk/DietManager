@@ -6,11 +6,11 @@ public class Food implements Loader{
 
     }
 
-    public Food getData(){
+    public String getData(){
         return null;
     }
 
-    public void setData(Food food){
+    public void setData(String food){
         
     }
 }

@@ -6,11 +6,11 @@ public class Log implements Loader{
 
     }
 
-    public Log getData(){
+    public String getData(){
         return null;
     }
 
-    public void setData(Log data){
+    public void setData(String data){
 
     }
 }
