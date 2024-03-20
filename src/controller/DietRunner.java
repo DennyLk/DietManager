@@ -2,6 +2,8 @@ package controller;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
+import model.DietModel;
+import view.UIFactory;
 
 public class DietRunner extends Application {
 
@@ -13,6 +15,7 @@ public class DietRunner extends Application {
 
     @Override
     public void start(Stage primaryStage)  {
-        DietController.run(primaryStage);
+        DietController controller = new DietController(new DietModel(), new UIFactory());
+        controller.run(primaryStage);
     } 
 }

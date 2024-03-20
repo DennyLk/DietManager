@@ -69,4 +69,11 @@ public class Log implements Loader{
     public void setData(String data){
 
     }
+
+
+    @Override
+    public String toString() {
+        String text = String.format("%s: %s calories - Date: %s", foodName, calories, date);
+        return text;
+    }
 }
