@@ -71,4 +71,8 @@ public class DietModel {
         fLog = Log.getfLog();
         wLog = Log.getwLog();
     }
+
+    public static void logSelectedFood(String foodName) {
+        Log.logFood(foodName);
+    }
 }

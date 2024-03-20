@@ -1,8 +1,5 @@
 package controller;
 
-import java.util.ArrayList;
-
-import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 import model.DietModel;
 import model.Food;
@@ -23,7 +20,7 @@ public class DietController {
     }
     
     public void run(Stage primaryStage) {
-        UI ui = UIFactory.createUI("Home",primaryStage);
+        UI ui = UIFactory.createUI("Home", primaryStage);
         ui.display();
         model.getAllFoods();
         model.getAllLogs();
@@ -33,5 +30,4 @@ public class DietController {
         HomeUI.setRecipes(Food.getrFoods());
 
     }
-
 }
