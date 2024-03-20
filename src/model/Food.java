@@ -1,8 +1,10 @@
 package model;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -102,8 +104,18 @@ public class Food implements Loader {
         }
     }
 
+    // Method that sets the data properly according to the getData method
     public void setData(String food) {
 
+    }
+
+    public static void addFood(String foodName) {
+        try (FileWriter fw = new FileWriter("src/model/assets/foods.csv", true);
+                BufferedWriter bw = new BufferedWriter(fw)) {
+            bw.write(foodName + "\n");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

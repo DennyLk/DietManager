@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.DietModel;
@@ -47,7 +48,13 @@ public class HomeUI implements UI {
         Button log = new Button("Log");
         log.setOnAction(e -> logSelectedFood());
 
-        root.getChildren().addAll(info, weight, foodlb, foodsBox, recipeLb, recipeBox, intake, log);
+        TextField foodInput = new TextField();
+        Button addButton = new Button("Add Food");
+        addButton.setOnAction(e -> DietModel.addFood(foodInput.getText()));
+        VBox inputLayout = new VBox();
+        inputLayout.getChildren().addAll(foodInput, addButton);
+
+        root.getChildren().addAll(info, weight, foodlb, foodsBox, recipeLb, recipeBox, intake, log, inputLayout);
 
         scene = new Scene(root, 750, 600);
         stage.setScene(scene);
