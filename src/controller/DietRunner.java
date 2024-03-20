@@ -1,14 +1,18 @@
 package controller;
 
-public class DietRunner {
-    
-    //Constructor
-    public DietRunner() {
-        
-    }
+import javafx.application.Application;
+import javafx.stage.Stage;
+
+public class DietRunner extends Application {
+
 
     //Main method
     public static void main(String[] args) {
-        DietController dietController = new DietController();
+        launch(args);
     }
+
+    @Override
+    public void start(Stage primaryStage)  {
+        DietController.run(primaryStage);
+    } 
 }

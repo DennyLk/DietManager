@@ -1,21 +1,25 @@
 package view;
 
-import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class WeightUI extends Application implements UI {
+public class WeightUI implements UI{
     private Stage stage;
     private Scene scene;
 
-    public void start(Stage stage) {
-        stage.setTitle("Weight Tracker");
+    public WeightUI(Stage stage) {
+        this.stage = stage;
+    }
+
+
+    @Override
+    public void display() {
+        stage.setTitle("Weight");
 
         VBox root = new VBox(8);
 
         scene = new Scene(root, 750, 600);
         stage.setScene(scene);
         stage.show();
-    }
-}
+    }}
