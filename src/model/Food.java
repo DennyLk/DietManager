@@ -8,16 +8,18 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class Food implements Loader {
+public abstract class Food {
 
-    private static ArrayList<Food> bFoods = new ArrayList<>();
-    private static ArrayList<Food> rFoods = new ArrayList<>();
+    private static ArrayList<Food> foods = new ArrayList<>();
 
     private String name;
     private String calories;
     private String proteins;
     private String carbs;
     private String fats;
+
+    public Food() {
+    }
 
     public Food(String name, String caloies, String proteins, String carbs, String fats) {
         this.name = name;
@@ -67,46 +69,20 @@ public class Food implements Loader {
         this.fats = fats;
     }
 
-    public static ArrayList<Food> getbFoods() {
-        return bFoods;
+    public static ArrayList<Food> getFoods() {
+        BasicFood f = new BasicFood();
+        f.getBasicFood();
+        Recipe r = new Recipe();
+        r.getRecipe();
+        return foods;
     }
 
-    public static void setbFoods(ArrayList<Food> bFoods) {
-        Food.bFoods = bFoods;
+    public static ArrayList<Food> getFoodsList() {
+        return foods;
     }
 
-    public static ArrayList<Food> getrFoods() {
-        return rFoods;
-    }
-
-    public static void setrFoods(ArrayList<Food> rFoods) {
-        Food.rFoods = rFoods;
-    }
-
-    public static void getData() {
-        String path = "src/model/assets/foods.csv";
-        try {
-            BufferedReader bufferedReader = new BufferedReader(new FileReader(path));
-            String line = "";
-            while ((line = bufferedReader.readLine()) != null) {
-                String[] data = line.split(",");
-                if (data[0].equals("b")) {
-                    bFoods.add(new Food(data[1], data[2], data[3], data[4], data[5]));
-                } else if (data[0].equals("r")) {
-                    rFoods.add(new Food(data[1], data[2], data[3], data[4], data[5]));
-                }
-            }
-            bufferedReader.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
-        }
-    }
-
-    // Method that sets the data properly according to the getData method
-    public void setData(String food) {
-
+    public static void setFoods(ArrayList<Food> foods) {
+        Food.foods = foods;
     }
 
     public static void addFood(String foodName) {
@@ -120,8 +96,10 @@ public class Food implements Loader {
 
     @Override
     public String toString() {
-        String text = String.format("%s: %s calories, %s proteins, %s carbs, %s fats", name, calories, proteins, carbs,
-                fats);
+        String text = String.format("%s: %s calories, %.2f proteins, %.2f carbs, %.2f fats",
+                name, calories,
+                Double.parseDouble(proteins), Double.parseDouble(carbs),
+                Double.parseDouble(fats));
         return text;
     }
 }
