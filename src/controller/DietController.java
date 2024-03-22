@@ -24,10 +24,9 @@ public class DietController {
         ui.display();
         model.getAllFoods();
         model.getAllLogs();
-        InfoUI.setLog(Log.getfLog());
-        WeightUI.setWeight(Log.getwLog());
-        HomeUI.setFoods(Food.getbFoods());
-        HomeUI.setRecipes(Food.getrFoods());
-
+        InfoUI.setLog(model.getfLog());
+        WeightUI.setWeight(model.getwLog());
+        HomeUI.setFoods(model.getFoods());
+        HomeUI.setRecipes(model.getFoods());
     }
 }

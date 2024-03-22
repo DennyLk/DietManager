@@ -8,7 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class Log implements Loader {
+public class Log {
 
     private static ArrayList<Log> fLog = new ArrayList<>();
     private static ArrayList<Log> wLog = new ArrayList<>();
