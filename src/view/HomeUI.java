@@ -18,7 +18,6 @@ public class HomeUI implements UI {
     private Stage stage;
     private Scene scene;
     private static ComboBox<String> foodsBox = new ComboBox<>();
-    private static ComboBox<String> recipeBox = new ComboBox<>();
 
     public HomeUI(Stage stage) {
         this.stage = stage;
@@ -39,12 +38,6 @@ public class HomeUI implements UI {
         Label foodlb = new Label("Basic Foods:");
         foodsBox.setEditable(false);
 
-        Label recipeLb = new Label("Recipe Foods:");
-        recipeBox.setEditable(false);
-
-        Button intake = new Button("Intake Food");
-        intake.setOnAction(e -> openIntakeUI());
-
         Button log = new Button("Log");
         log.setOnAction(e -> logSelectedFood());
 
@@ -54,7 +47,7 @@ public class HomeUI implements UI {
         VBox inputLayout = new VBox();
         inputLayout.getChildren().addAll(foodInput, addButton);
 
-        root.getChildren().addAll(info, weight, foodlb, foodsBox, recipeLb, recipeBox, intake, log, inputLayout);
+        root.getChildren().addAll(info, weight, foodlb, foodsBox, log, inputLayout);
 
         scene = new Scene(root, 750, 600);
         stage.setScene(scene);
@@ -79,26 +72,11 @@ public class HomeUI implements UI {
         foodsBox.setItems(foodNames);
     }
 
-    public static void setRecipes(ArrayList<Food> list) {
-        ObservableList<String> recipeNames = FXCollections.observableArrayList();
-        for (Food food : list) {
-            recipeNames.addAll(food.toString());
-        }
-        recipeBox.setItems(recipeNames);
-    }
-
-    public void openIntakeUI() {
-        UI intakeUI = UIFactory.createUI("Intake", stage);
-        intakeUI.display();
-    }
-
     private void logSelectedFood() {
         String selectedFood = foodsBox.getSelectionModel().getSelectedItem();
-        String selectedRecipe = recipeBox.getSelectionModel().getSelectedItem();
-        String itemToLog = (selectedFood != null) ? selectedFood : selectedRecipe;
 
-        if (itemToLog != null && !itemToLog.trim().isEmpty()) {
-            DietModel.logSelectedFood(itemToLog);
+        if (selectedFood != null && !selectedFood.trim().isEmpty()) {
+            DietModel.logSelectedFood(selectedFood);
         }
     }
 

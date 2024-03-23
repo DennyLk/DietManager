@@ -4,8 +4,7 @@ import java.util.ArrayList;
 
 public class DietModel {
 
-    private ArrayList<Food> bFoods = new ArrayList<>();
-    private ArrayList<Food> rFoods = new ArrayList<>();
+    private ArrayList<Food> foods = new ArrayList<>();
     private ArrayList<Log> fLog = new ArrayList<>();
     private ArrayList<Log> wLog = new ArrayList<>();
 
@@ -13,21 +12,15 @@ public class DietModel {
 
     }
 
-    public ArrayList<Food> getbFoods() {
-        return bFoods;
+    public ArrayList<Food> getFoods() {
+        return foods;
     }
 
-    public void setbFoods(ArrayList<Food> bFoods) {
-        this.bFoods = bFoods;
-    }
 
-    public ArrayList<Food> getrFoods() {
-        return rFoods;
+    public void setFoods(ArrayList<Food> foods) {
+        this.foods = foods;
     }
-
-    public void setrFoods(ArrayList<Food> rFoods) {
-        this.rFoods = rFoods;
-    }
+    
 
     public ArrayList<Log> getfLog() {
         return fLog;
@@ -52,9 +45,7 @@ public class DietModel {
     }
 
     public void getAllFoods() {
-        Food.getData();
-        bFoods = Food.getbFoods();
-        rFoods = Food.getrFoods();
+        this.foods = Food.getFoods();    
     }
 
     // method for getting the Log Class
