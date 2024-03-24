@@ -2,7 +2,6 @@ package controller;
 
 import javafx.stage.Stage;
 import model.DietModel;
-import model.Food;
 import model.Log;
 import view.HomeUI;
 import view.InfoUI;
@@ -20,6 +19,7 @@ public class DietController {
     }
     
     public void run(Stage primaryStage) {
+        Log.getData();
         UI ui = UIFactory.createUI("Home", primaryStage);
         ui.display();
         model.getAllFoods();
@@ -27,6 +27,5 @@ public class DietController {
         InfoUI.setLog(model.getfLog());
         WeightUI.setWeight(model.getwLog());
         HomeUI.setFoods(model.getFoods());
-        HomeUI.setRecipes(model.getFoods());
     }
 }
