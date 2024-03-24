@@ -38,19 +38,8 @@ public class DietModel {
         this.wLog = wLog;
     }
 
-    // method for getting the Food class
-    public Food getFood() {
-        Food f = null;
-        return f;
-    }
-
     public void getAllFoods() {
         this.foods = Food.getFoods();    
-    }
-
-    // method for getting the Log Class
-    public Log getLog() {
-        return null;
     }
 
     public void getAllLogs() {
