@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.time.LocalDate;
 
 public class Log {
 
@@ -49,13 +50,12 @@ public class Log {
             String line = "";
             while ((line = bufferedReader.readLine()) != null) {
                 String[] data = line.split(",");
-
                 if (data[0].equals("f")) {
-                    // Log format --> f,foodName,calories,date
-                    fLog.add(new Log(data[1], null, data[5]));
+                    // Assuming the format is: f,foodName,calories,date
+                    fLog.add(new Log(data[1], data[2], data[3]));
                 } else if (data[0].equals("w")) {
-                    // Log format --> w,weight,date
-                    wLog.add(new Log(data[1],  data[2]));
+                    // Assuming the format is: w,weight,date
+                    wLog.add(new Log(data[1], data[2]));
                 }
             }
             bufferedReader.close();
@@ -65,13 +65,14 @@ public class Log {
             ioe.printStackTrace();
         }
     }
+    
 
     public void setData(String data) {
 
     }
 
     public static void logFood(String foodName) {
-        String logEntry = "f," + foodName + ","+ java.time.LocalDate.now();
+        String logEntry = "f," + foodName + ","+ LocalDate.now();
         
         try (FileWriter fw = new FileWriter("src/model/assets/log.csv", true);
              BufferedWriter bw = new BufferedWriter(fw)) {
