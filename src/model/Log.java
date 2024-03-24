@@ -66,10 +66,6 @@ public class Log {
         }
     }
 
-    public void setData(String data) {
-
-    }
-
     public static void logFood(String foodName) {
         String logEntry = "f," + foodName + ","+ java.time.LocalDate.now();
         
