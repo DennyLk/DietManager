@@ -47,7 +47,18 @@ public class HomeUI implements UI {
         VBox inputLayout = new VBox();
         inputLayout.getChildren().addAll(foodInput, addButton);
 
-        root.getChildren().addAll(info, weight, foodlb, foodsBox, log, inputLayout);
+        Label recipeLabel = new Label("Recipe:");
+        TextField recipeInput = new TextField();
+        recipeInput.setPromptText("Recipe");
+
+        Button addRecipeButton = new Button("Add Recipe");
+
+        addRecipeButton.setOnAction(e -> DietModel.addFood(recipeInput.getText()));
+
+        VBox recipeInputLayout = new VBox();
+        recipeInputLayout.getChildren().addAll(recipeLabel, recipeInput, addRecipeButton);
+
+        root.getChildren().addAll(info, weight, foodlb, foodsBox, log, inputLayout, recipeInputLayout);
 
         scene = new Scene(root, 750, 600);
         stage.setScene(scene);
