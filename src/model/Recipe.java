@@ -65,7 +65,7 @@ public class Recipe extends Food {
     }
 
     public static void addRecipe(String recipeName) {
-        try (FileWriter fw = new FileWriter("src/model/assets/foods.csv", true);
+        try (FileWriter fw = new FileWriter("dietmanager801g2/assets/foods.csv", true);
                 BufferedWriter bw = new BufferedWriter(fw)) {
             bw.write("r," + recipeName + "\n");
         } catch (IOException e) {
