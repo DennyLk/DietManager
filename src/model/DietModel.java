@@ -55,4 +55,8 @@ public class DietModel {
     public static void addFood(String foodName) {
         Food.addFood(foodName);
     }
+
+    public static void addRecipe(String recipe) {
+        Recipe.addRecipe(recipe);
+    }
 }

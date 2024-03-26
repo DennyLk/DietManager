@@ -85,7 +85,7 @@ public abstract class Food {
     public static void addFood(String foodName) {
         try (FileWriter fw = new FileWriter("src/model/assets/foods.csv", true);
                 BufferedWriter bw = new BufferedWriter(fw)) {
-            bw.write(foodName + "\n");
+            bw.write("b," + foodName + "\n");
         } catch (IOException e) {
             e.printStackTrace();
         }

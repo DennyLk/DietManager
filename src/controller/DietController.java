@@ -27,5 +27,12 @@ public class DietController {
         InfoUI.setLog(model.getfLog());
         WeightUI.setWeight(model.getwLog());
         HomeUI.setFoods(model.getFoods());
+
+        if (ui instanceof HomeUI) {
+            ((HomeUI)ui).getAddButton().setOnAction(e -> DietModel.addFood( ((HomeUI)ui).getFoodInput().getText()));
+            ((HomeUI)ui).getAddRecipeButton().setOnAction(e -> DietModel.addRecipe( ((HomeUI)ui).getRecipeInput().getText()));
+            ((HomeUI)ui).getLog().setOnAction(e -> DietModel.logSelectedFood( HomeUI.getFoodsBox().getSelectionModel().getSelectedItem()));
+
+        }
     }
 }

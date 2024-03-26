@@ -11,16 +11,45 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import model.DietModel;
 import model.Food;
 
 public class HomeUI implements UI {
     private Stage stage;
     private Scene scene;
+    Button addButton;
+    TextField foodInput;
+    Button addRecipeButton;
+    TextField recipeInput;
+    Button log;
+
     private static ComboBox<String> foodsBox = new ComboBox<>();
 
     public HomeUI(Stage stage) {
         this.stage = stage;
+    }
+    
+    public Button getLog() {
+        return log;
+    }
+
+    public Button getAddRecipeButton() {
+        return addRecipeButton;
+    }
+
+    public TextField getRecipeInput() {
+        return recipeInput;
+    }
+
+    public TextField getFoodInput() {
+        return foodInput;
+    }
+
+    public Button getAddButton() {
+        return addButton;
+    }
+    
+    public static ComboBox<String> getFoodsBox() {
+        return foodsBox;
     }
 
     @Override
@@ -38,22 +67,18 @@ public class HomeUI implements UI {
         Label foodlb = new Label("Basic Foods:");
         foodsBox.setEditable(false);
 
-        Button log = new Button("Log");
-        log.setOnAction(e -> logSelectedFood());
+        log = new Button("Log");
 
-        TextField foodInput = new TextField();
-        Button addButton = new Button("Add Food");
-        addButton.setOnAction(e -> DietModel.addFood(foodInput.getText()));
+        foodInput = new TextField();
+        addButton = new Button("Add Food");
         VBox inputLayout = new VBox();
         inputLayout.getChildren().addAll(foodInput, addButton);
 
         Label recipeLabel = new Label("Recipe:");
-        TextField recipeInput = new TextField();
+        recipeInput = new TextField();
         recipeInput.setPromptText("Recipe");
 
-        Button addRecipeButton = new Button("Add Recipe");
-
-        addRecipeButton.setOnAction(e -> DietModel.addFood(recipeInput.getText()));
+        addRecipeButton = new Button("Add Recipe");
 
         VBox recipeInputLayout = new VBox();
         recipeInputLayout.getChildren().addAll(recipeLabel, recipeInput, addRecipeButton);
@@ -82,13 +107,4 @@ public class HomeUI implements UI {
         }
         foodsBox.setItems(foodNames);
     }
-
-    private void logSelectedFood() {
-        String selectedFood = foodsBox.getSelectionModel().getSelectedItem();
-
-        if (selectedFood != null && !selectedFood.trim().isEmpty()) {
-            DietModel.logSelectedFood(selectedFood);
-        }
-    }
-
 }
