@@ -25,7 +25,7 @@ public class Recipe extends Food {
     }
 
     public void getRecipe() {
-        String path = "src/model/assets/foods.csv";
+        String path = "dietmanager801g2/assets/foods.csv";
         try {
             BufferedReader bufferedReader = new BufferedReader(new FileReader(path));
             String line = "";
