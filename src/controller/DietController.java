@@ -17,7 +17,7 @@ public class DietController {
         this.model = model;
         this.view = view;
     }
-    
+
     public void run(Stage primaryStage) {
         Log.getData();
         UI ui = UIFactory.createUI("Home", primaryStage);
@@ -26,12 +26,16 @@ public class DietController {
         model.getAllLogs();
         InfoUI.setLog(model.getfLog());
         WeightUI.setWeight(model.getwLog());
-        HomeUI.setFoods(model.getFoods());
 
         if (ui instanceof HomeUI) {
-            ((HomeUI)ui).getAddButton().setOnAction(e -> DietModel.addFood( ((HomeUI)ui).getFoodInput().getText()));
-            ((HomeUI)ui).getAddRecipeButton().setOnAction(e -> DietModel.addRecipe( ((HomeUI)ui).getRecipeInput().getText()));
-            ((HomeUI)ui).getLog().setOnAction(e -> DietModel.logSelectedFood( HomeUI.getFoodsBox().getSelectionModel().getSelectedItem()));
+            HomeUI.setFoods(model.getFoods(), HomeUI.getFoodsBox());
+            HomeUI.setFoods(model.getFoods(), HomeUI.getRecipeBox());
+            HomeUI.setQuantity(10, HomeUI.getQuantityBox());
+            ((HomeUI) ui).getAddButton().setOnAction(e -> DietModel.addFood(((HomeUI) ui).getFoodInput().getText()));
+            ((HomeUI) ui).getAddRecipeButton()
+                    .setOnAction(e -> DietModel.addRecipe(((HomeUI) ui).getRecipeInput().getText()));
+            ((HomeUI) ui).getLog().setOnAction(
+                    e -> DietModel.logSelectedFood(HomeUI.getFoodsBox().getSelectionModel().getSelectedItem()));
 
         }
     }

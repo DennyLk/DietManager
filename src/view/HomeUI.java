@@ -10,6 +10,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.Food;
 
@@ -20,14 +21,18 @@ public class HomeUI implements UI {
     TextField foodInput;
     Button addRecipeButton;
     TextField recipeInput;
+    TextField recepieNameInput;
     Button log;
+    Button setRecipe;
 
     private static ComboBox<String> foodsBox = new ComboBox<>();
+    private static ComboBox<String> recipeBox = new ComboBox<>();
+    private static ComboBox<Integer> quantityBox = new ComboBox<>();
 
     public HomeUI(Stage stage) {
         this.stage = stage;
     }
-    
+
     public Button getLog() {
         return log;
     }
@@ -47,9 +52,25 @@ public class HomeUI implements UI {
     public Button getAddButton() {
         return addButton;
     }
-    
+
     public static ComboBox<String> getFoodsBox() {
         return foodsBox;
+    }
+
+    public static ComboBox<String> getRecipeBox() {
+        return recipeBox;
+    }
+
+    public static void setRecipeBox(ComboBox<String> recipeBox) {
+        HomeUI.recipeBox = recipeBox;
+    }
+
+    public static ComboBox<Integer> getQuantityBox() {
+        return quantityBox;
+    }
+
+    public static void setQuantityBox(ComboBox<Integer> quantityBox) {
+        HomeUI.quantityBox = quantityBox;
     }
 
     @Override
@@ -74,16 +95,52 @@ public class HomeUI implements UI {
         VBox inputLayout = new VBox();
         inputLayout.getChildren().addAll(foodInput, addButton);
 
+        setRecipe = new Button("Add Food To Recipe");
+
+        setRecipe.setOnAction(e -> {
+            String selected = recipeBox.getValue();
+            int quantity = quantityBox.getValue();
+            String name = recepieNameInput.getText().trim();
+
+            if (selected != null && quantity != 0) {
+                String[] parts = selected.split(":");
+                String recipeName = parts[0].trim();
+
+                String current = recipeInput.getText();
+                String[] data = current.split(",");
+
+                StringBuilder currentRecipe = new StringBuilder();
+                for (int i = 1; i < data.length; i++) {
+                    currentRecipe.append(data[i] + ",");
+                }
+
+                if (currentRecipe.length() > 0) {
+                    currentRecipe.deleteCharAt(currentRecipe.length() - 1);
+                }
+
+                String currentRecipeStr = currentRecipe.toString();
+                if (!currentRecipeStr.isEmpty()) {
+                    recipeInput.setText(name + "," + currentRecipeStr + "," + recipeName + "," + quantity);
+                } else {
+                    recipeInput.setText(name + "," + recipeName + "," + quantity);
+                }
+            }
+        });
+
         Label recipeLabel = new Label("Recipe:");
         recipeInput = new TextField();
-        recipeInput.setPromptText("Recipe");
+        recipeInput.setEditable(false);
+
+        Label lblName = new Label("Add recipe name");
+        recepieNameInput = new TextField();
 
         addRecipeButton = new Button("Add Recipe");
 
         VBox recipeInputLayout = new VBox();
         recipeInputLayout.getChildren().addAll(recipeLabel, recipeInput, addRecipeButton);
 
-        root.getChildren().addAll(info, weight, foodlb, foodsBox, log, inputLayout, recipeInputLayout);
+        root.getChildren().addAll(info, weight, foodlb, foodsBox, log, inputLayout, lblName, recepieNameInput,
+                recipeBox, quantityBox, setRecipe, recipeInputLayout);
 
         scene = new Scene(root, 750, 600);
         stage.setScene(scene);
@@ -100,11 +157,20 @@ public class HomeUI implements UI {
         infoUI.display();
     }
 
-    public static void setFoods(ArrayList<Food> list) {
+    public static void setFoods(ArrayList<Food> list, ComboBox<String> box) {
         ObservableList<String> foodNames = FXCollections.observableArrayList();
         for (Food food : list) {
             foodNames.addAll(food.toString());
         }
-        foodsBox.setItems(foodNames);
+        box.setItems(foodNames);
     }
+
+    public static void setQuantity(int n, ComboBox<Integer> box) {
+        ObservableList<Integer> number = FXCollections.observableArrayList();
+        for (int i = 1; i <= n; i++) {
+            number.addAll(i);
+        }
+        box.setItems(number);
+    }
+
 }
