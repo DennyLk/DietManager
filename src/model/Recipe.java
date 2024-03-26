@@ -1,13 +1,15 @@
 package model;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
 public class Recipe extends Food {
-    private  ArrayList<Food> allFoods = super.getFoodsList();
+    private ArrayList<Food> allFoods = super.getFoodsList();
 
     private double calories;
     private double proteins;
@@ -32,12 +34,13 @@ public class Recipe extends Food {
                 if (data[0].equals("r")) {
                     for (int i = 0; i < data.length; i++) {
                         super.setName(data[1]);
-    
-                        if (i>1 && (i%2==0)) {
-                            calculateRecipeInfo(data[i], Double.parseDouble(data[i+1]));
+
+                        if (i > 1 && (i % 2 == 0)) {
+                            calculateRecipeInfo(data[i], Double.parseDouble(data[i + 1]));
                         }
                     }
-                    super.getFoodsList().add(new Recipe(super.getName(), String.valueOf(calories), String.valueOf(proteins), String.valueOf(carbs), String.valueOf(fats)));
+                    super.getFoodsList().add(new Recipe(super.getName(), String.valueOf(calories),
+                            String.valueOf(proteins), String.valueOf(carbs), String.valueOf(fats)));
                 }
             }
             bufferedReader.close();
@@ -58,6 +61,15 @@ public class Recipe extends Food {
                 this.fats += (Double.parseDouble(f.getFats()) * amount);
                 return;
             }
+        }
+    }
+
+    public static void addRecipe(String recipeName) {
+        try (FileWriter fw = new FileWriter("src/model/assets/foods.csv", true);
+                BufferedWriter bw = new BufferedWriter(fw)) {
+            bw.write("r," + recipeName + "\n");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
