@@ -16,7 +16,7 @@ public class BasicFood extends Food {
 
 
         public void getBasicFood() {
-        String path = "src/model/assets/foods.csv";
+        String path = "dietmanager801g2/assets/foods.csv";
         try {
             BufferedReader bufferedReader = new BufferedReader(new FileReader(path));
             String line = "";

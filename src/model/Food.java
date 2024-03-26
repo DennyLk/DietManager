@@ -83,7 +83,7 @@ public abstract class Food {
     }
 
     public static void addFood(String foodName) {
-        try (FileWriter fw = new FileWriter("src/model/assets/foods.csv", true);
+        try (FileWriter fw = new FileWriter("dietmanager801g2/assets/foods.csv", true);
                 BufferedWriter bw = new BufferedWriter(fw)) {
             bw.write("b," + foodName + "\n");
         } catch (IOException e) {
