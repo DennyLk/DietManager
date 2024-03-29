@@ -1,10 +1,8 @@
 package model;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -95,15 +93,6 @@ public abstract class Food {
             ioe.printStackTrace();
         }
         return allFoods;
-    }
-
-    public static void addFood(String foodName) {
-        try (FileWriter fw = new FileWriter("./assets/foods.csv", true);
-                BufferedWriter bw = new BufferedWriter(fw)) {
-            bw.write("b," + foodName + "\n");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     @Override

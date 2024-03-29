@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class Recipe extends Food {
+    String recipeParts;
 
     public Recipe(String name, Double caloies, Double proteins, Double carbs, Double fats) {
         super(name, caloies, proteins, carbs, fats);
@@ -13,6 +14,11 @@ public class Recipe extends Food {
 
     public Recipe() {
         super();
+    }
+
+    public Recipe(String name, String recipeParts) {
+        setName(name);
+        this.recipeParts = recipeParts;
     }
 
 
@@ -29,20 +35,17 @@ public class Recipe extends Food {
         }
     }
 
-    public static void addRecipe(String recipeName) {
+    public void addRecipe() {
         try (FileWriter fw = new FileWriter("./assets/foods.csv", true);
                 BufferedWriter bw = new BufferedWriter(fw)) {
-            bw.write("r," + recipeName + "\n");
+            bw.write(this.toCsv());
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public String toCsv() {
-        String text = String.format("r, %s: %s calories, %.2f proteins, %.2f carbs, %.2f fats",
-                name, calories,
-                proteins, carbs,
-                fats);
+        String text = "r," + this.name + "," + this.recipeParts +"\n";
         return text;
     }
 
