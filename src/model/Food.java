@@ -1,26 +1,27 @@
 package model;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
 public abstract class Food {
 
-    private static ArrayList<Food> foods = new ArrayList<>();
-
-    private String name;
-    private String calories;
-    private String proteins;
-    private String carbs;
-    private String fats;
+    protected String name;
+    protected Double calories = 0.0;
+    protected Double proteins = 0.0;
+    protected Double carbs = 0.0;
+    protected Double fats = 0.0;
 
     public Food() {
     }
 
-    public Food(String name, String caloies, String proteins, String carbs, String fats) {
+    public Food(String name, Double calories, Double proteins, Double carbs, Double fats) {
         this.name = name;
-        this.calories = caloies;
+        this.calories = calories;
         this.proteins = proteins;
         this.carbs = carbs;
         this.fats = fats;
@@ -34,56 +35,70 @@ public abstract class Food {
         this.name = name;
     }
 
-    public String getCalories() {
+    public Double getCalories() {
         return calories;
     }
 
-    public void setCalories(String calories) {
+    public void setCalories(Double calories) {
         this.calories = calories;
     }
 
-    public String getProteins() {
+    public Double getProteins() {
         return proteins;
     }
 
-    public void setProteins(String proteins) {
+    public void setProteins(Double proteins) {
         this.proteins = proteins;
     }
 
-    public String getCarbs() {
+    public Double getCarbs() {
         return carbs;
     }
 
-    public void setCarbs(String carbs) {
+    public void setCarbs(Double carbs) {
         this.carbs = carbs;
     }
 
-    public String getFats() {
+    public Double getFats() {
         return fats;
     }
 
-    public void setFats(String fats) {
+    public void setFats(Double fats) {
         this.fats = fats;
     }
 
-    public static ArrayList<Food> getFoods() {
-        BasicFood f = new BasicFood();
-        f.getBasicFood();
-        Recipe r = new Recipe();
-        r.getRecipe();
-        return foods;
-    }
-
-    public static ArrayList<Food> getFoodsList() {
-        return foods;
-    }
-
-    public static void setFoods(ArrayList<Food> foods) {
-        Food.foods = foods;
+    public static ArrayList<Food> loadFoods() {
+        ArrayList<Food> allFoods = new ArrayList<>();
+        String path = "./assets/foods.csv";
+        try {
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(path));
+            String line = "";
+            while ((line = bufferedReader.readLine()) != null) {
+                String[] data = line.split(",");
+                if (data[0].equals("b")) {
+                    allFoods.add(new BasicFood(data[1], Double.parseDouble(data[2]), Double.parseDouble(data[3]), Double.parseDouble(data[4]), Double.parseDouble(data[5])));
+                } else {
+                    Recipe r = new Recipe();
+                    r.setName(data[1]);
+                    for (int i = 0; i < data.length; i++) {
+                        if (i > 1 && (i % 2 == 0)) {
+                            r.calculateRecipeInfo(data[i], Double.parseDouble(data[i + 1]), allFoods);
+                        }
+                    }
+                    allFoods.add(r);
+                }
+            }
+            bufferedReader.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
+        return allFoods;
     }
 
     public static void addFood(String foodName) {
-        try (FileWriter fw = new FileWriter("dietmanager801g2/assets/foods.csv", true);
+        try (FileWriter fw = new FileWriter("./assets/foods.csv", true);
                 BufferedWriter bw = new BufferedWriter(fw)) {
             bw.write("b," + foodName + "\n");
         } catch (IOException e) {
@@ -95,8 +110,8 @@ public abstract class Food {
     public String toString() {
         String text = String.format("%s: %s calories, %.2f proteins, %.2f carbs, %.2f fats",
                 name, calories,
-                Double.parseDouble(proteins), Double.parseDouble(carbs),
-                Double.parseDouble(fats));
+                proteins, carbs,
+                fats);
         return text;
     }
 }

@@ -44,7 +44,7 @@ public class Log {
     }
 
     public static void getData() {
-        String path = "dietmanager801g2/assets/log.csv";
+        String path = "./assets/log.csv";
         try {
             BufferedReader bufferedReader = new BufferedReader(new FileReader(path));
             String line = "";
@@ -70,7 +70,7 @@ public class Log {
     public static void logFood(String foodName) {
         String logEntry = "f," + foodName + ","+ LocalDate.now();
         
-        try (FileWriter fw = new FileWriter("dietmanager801g2/assets/log.csv", true);
+        try (FileWriter fw = new FileWriter("./assets/log.csv", true);
              BufferedWriter bw = new BufferedWriter(fw)) {
             bw.write(logEntry + "\n");
         } catch (IOException e) {
