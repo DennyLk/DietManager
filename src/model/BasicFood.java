@@ -1,5 +1,9 @@
 package model;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+
 public class BasicFood extends Food {
 
     public BasicFood() {
@@ -9,11 +13,17 @@ public class BasicFood extends Food {
         super(name, caloies, proteins, carbs, fats);
     }
 
+        public void addBasicFood() {
+        try (FileWriter fw = new FileWriter("./assets/foods.csv", true);
+                BufferedWriter bw = new BufferedWriter(fw)) {
+            bw.write(this.toCsv());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public String toCsv() {
-        String text = String.format("b, %s: %s calories, %.2f proteins, %.2f carbs, %.2f fats",
-                name, calories,
-                proteins, carbs,
-                fats);
+        String text = "b," + name + "," + calories + "," + proteins + "," + carbs + "," + fats + "\n";
         return text;
     }
     

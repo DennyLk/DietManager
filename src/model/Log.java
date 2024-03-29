@@ -7,18 +7,17 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.time.LocalDate;
 
 public class Log {
 
     private static ArrayList<Log> fLog = new ArrayList<>();
     private static ArrayList<Log> wLog = new ArrayList<>();
 
-    private String foodName, calories, date, weight;
+    private String foodName, nutritions, date, weight;
 
-    public Log(String foodName, String calories, String date) {
+    public Log(String foodName, String nutritions, String date) {
         this.foodName = foodName;
-        this.calories = calories;
+        this.nutritions = nutritions;
         this.date = date;
     }
 
@@ -49,7 +48,7 @@ public class Log {
             BufferedReader bufferedReader = new BufferedReader(new FileReader(path));
             String line = "";
             while ((line = bufferedReader.readLine()) != null) {
-                String[] data = line.split(",");
+                String[] data = line.split(":");
                 if (data[0].equals("f")) {
                     // Assuming the format is: f,foodName,calories,date
                     fLog.add(new Log(data[1], data[2], data[3]));
@@ -67,20 +66,24 @@ public class Log {
     }
     
 
-    public static void logFood(String foodName) {
-        String logEntry = "f," + foodName + ","+ LocalDate.now();
-        
+    public void logFood() {
+       
         try (FileWriter fw = new FileWriter("./assets/log.csv", true);
              BufferedWriter bw = new BufferedWriter(fw)) {
-            bw.write(logEntry + "\n");
+            bw.write(this.toCsv());
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    public String toCsv() {
+        String logEntry = "f:" + foodName + ":" + nutritions + ":" + date + "\n";
+        return logEntry;
+    }
+
     @Override
     public String toString() {
-        String text = String.format("%s: - Date: %s", foodName, date);
+        String text = date + ":  f:  " + foodName + ":  " + nutritions;
         return text;
     }
 }
