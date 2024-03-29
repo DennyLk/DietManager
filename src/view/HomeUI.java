@@ -85,7 +85,7 @@ public class HomeUI implements UI {
         Button weight = new Button("Check your weight");
         weight.setOnAction(e -> openWeightUI());
 
-        Label foodlb = new Label("Basic Foods:");
+        Label foodlb = new Label("Foods:");
         foodsBox.setEditable(false);
 
         log = new Button("Log");

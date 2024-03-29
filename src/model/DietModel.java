@@ -39,7 +39,7 @@ public class DietModel {
     }
 
     public void getAllFoods() {
-        this.foods = Food.getFoods();    
+        this.foods = Food.loadFoods();    
     }
 
     public void getAllLogs() {
