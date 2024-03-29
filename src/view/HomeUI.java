@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -20,6 +22,7 @@ public class HomeUI implements UI {
     Button addButton;
     TextField foodInput;
     Button addRecipeButton;
+    TextField basicFoodName, basicFoodCalories, basicFoodProteins, basicFoodCarbs, basicFoodFats;
     TextField recipeInput;
     TextField recepieNameInput;
     Button log;
@@ -31,6 +34,10 @@ public class HomeUI implements UI {
 
     public HomeUI(Stage stage) {
         this.stage = stage;
+    }
+
+    public Button getAddBasicFoodButton(){
+        return addButton;
     }
 
     public Button getLog() {
@@ -90,10 +97,33 @@ public class HomeUI implements UI {
 
         log = new Button("Log");
 
-        foodInput = new TextField();
+        // foodInput = new TextField();
+
+        Label foodName = new Label("Enter Food Name");
+        basicFoodName = new TextField();
+        basicFoodName.setMaxWidth(400);
+
+        Label foodCalories = new Label("Enter Food Calories");
+        basicFoodCalories = new TextField();
+        basicFoodCalories.setMaxWidth(400);
+
+        Label foodProteins = new Label("Enter Food Proteins");
+        basicFoodProteins = new TextField();
+        basicFoodProteins.setMaxWidth(400);
+
+        Label foodCarbs = new Label("Enter Food Carbs");
+        basicFoodCarbs = new TextField();
+        basicFoodCarbs.setMaxWidth(400);
+
+        Label foodFats = new Label("Enter Food Fats");
+        basicFoodFats = new TextField();
+        basicFoodFats.setMaxWidth(400);
+
         addButton = new Button("Add Food");
         VBox inputLayout = new VBox();
-        inputLayout.getChildren().addAll(foodInput, addButton);
+        inputLayout.getChildren().addAll(foodName, basicFoodName, foodCalories, basicFoodCalories, foodProteins, basicFoodProteins, foodCarbs, basicFoodCarbs, foodFats, basicFoodFats, addButton);
+        inputLayout.setAlignment(Pos.CENTER);
+        inputLayout.setSpacing(5);
 
         setRecipe = new Button("Add Food To Recipe");
 
@@ -142,7 +172,7 @@ public class HomeUI implements UI {
         root.getChildren().addAll(info, weight, foodlb, foodsBox, log, inputLayout, lblName, recepieNameInput,
                 recipeBox, quantityBox, setRecipe, recipeInputLayout);
 
-        scene = new Scene(root, 750, 600);
+        scene = new Scene(root, 800, 750);
         stage.setScene(scene);
         stage.show();
     }
@@ -171,6 +201,17 @@ public class HomeUI implements UI {
             number.addAll(i);
         }
         box.setItems(number);
+    }
+
+    public String addBasicFood(){
+        String name = basicFoodName.getText();
+        double calories = Double.parseDouble(basicFoodCalories.getText());
+        double proteins = Double.parseDouble(basicFoodProteins.getText());
+        double carbs = Double.parseDouble(basicFoodCarbs.getText());
+        double fats = Double.parseDouble(basicFoodFats.getText());
+
+        return String.format("%s,%f,%f,%f,%f", name, calories, proteins, carbs, fats);
+
     }
 
 }

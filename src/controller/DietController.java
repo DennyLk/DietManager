@@ -34,6 +34,11 @@ public class DietController {
             ((HomeUI) ui).getAddButton().setOnAction(e -> DietModel.addFood(((HomeUI) ui).getFoodInput().getText()));
             ((HomeUI) ui).getAddRecipeButton()
                     .setOnAction(e -> DietModel.addRecipe(((HomeUI) ui).getRecipeInput().getText()));
+            ((HomeUI) ui).getAddBasicFoodButton()
+                    .setOnAction(e -> {
+                        DietModel.addFood(((HomeUI) ui).addBasicFood());
+                        HomeUI.setFoods(model.getFoods(), HomeUI.getFoodsBox());
+                    });
             ((HomeUI) ui).getLog().setOnAction(
                     e -> DietModel.logSelectedFood(HomeUI.getFoodsBox().getSelectionModel().getSelectedItem()));
 
