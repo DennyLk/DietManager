@@ -14,6 +14,7 @@ public class DietModel {
     }
 
     public ArrayList<Food> getFoods() {
+        getAllFoods();
         return foods;
     }
 
