@@ -14,9 +14,14 @@ public class InfoUI implements UI {
     private Stage stage;
     private Scene scene;
     private static TextArea logBox = new TextArea();
+    Button back;
 
     public InfoUI(Stage stage) {
         this.stage = stage;
+    }
+
+    public Button getBack() {
+        return this.back;
     }
 
     @Override
@@ -28,10 +33,10 @@ public class InfoUI implements UI {
         Label loglb = new Label("Daily Log:");
         logBox.setEditable(false);
 
-        Button info = new Button("Back");
-        info.setOnAction(e -> backBtn());
+        back = new Button("Back");
 
-        root.getChildren().addAll(loglb, logBox, info);
+
+        root.getChildren().addAll(loglb, logBox, back);
 
         scene = new Scene(root, 750, 600);
         stage.setScene(scene);
@@ -39,6 +44,7 @@ public class InfoUI implements UI {
     }
 
     public static void setLog(ArrayList<Log> list) {
+        logBox.clear();
         if (list.size() == 0) {
             logBox.setText("No Logs for today");
         } else {
@@ -46,10 +52,5 @@ public class InfoUI implements UI {
                 logBox.appendText(log.toString() + "\n");
             }
         }
-    }
-
-    public void backBtn() {
-        UI homeUI = UIFactory.createUI("Home", stage);
-        homeUI.display();
     }
 }

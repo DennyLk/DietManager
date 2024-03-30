@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -12,7 +11,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.Food;
 
@@ -27,6 +25,7 @@ public class HomeUI implements UI {
     TextField recepieNameInput;
     Button log;
     Button setRecipe;
+    Button info;
 
     private static ComboBox<String> foodsBox = new ComboBox<>();
     private static ComboBox<String> recipeBox = new ComboBox<>();
@@ -60,6 +59,10 @@ public class HomeUI implements UI {
         return addButton;
     }
 
+    public Button getInfo() {
+        return info;
+    }
+
     public static ComboBox<String> getFoodsBox() {
         return foodsBox;
     }
@@ -86,8 +89,8 @@ public class HomeUI implements UI {
 
         VBox root = new VBox(8);
 
-        Button info = new Button("Check your daily intake");
-        info.setOnAction(e -> openInfoUI());
+        info = new Button("Check your daily intake");
+
 
         Button weight = new Button("Check your weight");
         weight.setOnAction(e -> openWeightUI());
@@ -175,11 +178,6 @@ public class HomeUI implements UI {
         scene = new Scene(root, 800, 750);
         stage.setScene(scene);
         stage.show();
-    }
-
-    public void openInfoUI() {
-        UI infoUI = UIFactory.createUI("Info", stage);
-        infoUI.display();
     }
 
     public void openWeightUI() {

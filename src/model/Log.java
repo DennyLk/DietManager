@@ -43,6 +43,7 @@ public class Log {
     }
 
     public static void getData() {
+        fLog.clear();
         String path = "./assets/log.csv";
         try {
             BufferedReader bufferedReader = new BufferedReader(new FileReader(path));
