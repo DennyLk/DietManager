@@ -16,6 +16,6 @@ public class DietRunner extends Application {
     @Override
     public void start(Stage primaryStage)  {
         DietController controller = new DietController(new DietModel(), new UIFactory());
-        controller.run(primaryStage);
+        controller.run(primaryStage, "Home");
     } 
 }
