@@ -36,6 +36,12 @@ public class DietController {
                         HomeUI.setFoods(model.getFoods(), HomeUI.getFoodsBox());
                         HomeUI.setFoods(model.getFoods(), HomeUI.getRecipeBox());
                     });
+            ((HomeUI) ui).getDailyButton()
+                    .setOnAction(e -> {
+                        DietModel.addDailyLog(((HomeUI) ui).getDailyLogCorrectForm().getText());
+                        HomeUI.addDailyLog(model.getDailyLog(), HomeUI.getDailyLog());
+                    });
+                        
             ((HomeUI) ui).getAddBasicFoodButton()
                     .setOnAction(e -> {
                         DietModel.addFood(((HomeUI) ui).addBasicFood());

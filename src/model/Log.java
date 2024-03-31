@@ -6,12 +6,16 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Log {
 
     private static ArrayList<Log> fLog = new ArrayList<>();
     private static ArrayList<Log> wLog = new ArrayList<>();
+    private static ArrayList<Log> dailyLog = new ArrayList<>();
+
+    public static final String PATH = "./assets/log.csv";
 
     private String foodName, nutritions, date, weight;
 
@@ -24,6 +28,14 @@ public class Log {
     public Log(String weight, String date) {
         this.weight = weight;
         this.date = date;
+    }
+
+    public static ArrayList<Log> getDailyLog() {
+        return dailyLog;
+    }
+
+    public static void setDailyLog(ArrayList<Log> dailyLog) {
+        Log.dailyLog = dailyLog;
     }
 
     public static ArrayList<Log> getfLog() {
@@ -44,9 +56,8 @@ public class Log {
 
     public static void getData() {
         fLog.clear();
-        String path = "./assets/log.csv";
         try {
-            BufferedReader bufferedReader = new BufferedReader(new FileReader(path));
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(PATH));
             String line = "";
             while ((line = bufferedReader.readLine()) != null) {
                 String[] data = line.split(":");
@@ -63,6 +74,16 @@ public class Log {
             e.printStackTrace();
         } catch (IOException ioe) {
             ioe.printStackTrace();
+        }
+    }
+
+    public static void dailyLog(String date){
+        dailyLog.clear();
+        ArrayList<Log> food = getfLog();
+        for (int i = 0; i < food.size(); i++) {
+            if(food.get(i).date.equals(date)){
+                dailyLog.add(food.get(i));
+            }
         }
     }
     
