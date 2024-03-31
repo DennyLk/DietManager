@@ -1,5 +1,7 @@
 package view;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import javafx.collections.FXCollections;
@@ -8,8 +10,11 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.Food;
@@ -26,6 +31,10 @@ public class HomeUI implements UI {
     Button log;
     Button setRecipe;
     Button info;
+    Button dailyButton;
+    TextField dailyLogCorrectForm;
+    DatePicker datePicker;
+    static TextArea dailyLog;
 
     private static ComboBox<String> foodsBox = new ComboBox<>();
     private static ComboBox<String> recipeBox = new ComboBox<>();
@@ -33,6 +42,19 @@ public class HomeUI implements UI {
 
     public HomeUI(Stage stage) {
         this.stage = stage;
+    }
+
+    public static TextArea getDailyLog() {
+        return dailyLog;
+    }
+
+    public TextField getDailyLogCorrectForm() {
+        return dailyLogCorrectForm;
+    }
+
+
+    public Button getDailyButton() {
+        return dailyButton;
     }
 
     public Button getAddBasicFoodButton(){
@@ -172,10 +194,31 @@ public class HomeUI implements UI {
         VBox recipeInputLayout = new VBox();
         recipeInputLayout.getChildren().addAll(recipeLabel, recipeInput, addRecipeButton);
 
-        root.getChildren().addAll(info, weight, foodlb, foodsBox, log, inputLayout, lblName, recepieNameInput,
-                recipeBox, quantityBox, setRecipe, recipeInputLayout);
+        VBox dailyCalories = new VBox();
+        HBox hBox = new HBox();
 
-        scene = new Scene(root, 800, 750);
+        datePicker = new DatePicker();
+        dailyLog = new TextArea();
+        dailyButton = new Button("Create Daily Log");
+
+        hBox.getChildren().addAll(datePicker, dailyButton);
+        hBox.setAlignment(Pos.CENTER);
+        dailyCalories.getChildren().addAll(hBox, dailyLog);
+        dailyCalories.setAlignment(Pos.CENTER);
+        dailyLogCorrectForm = new TextField();
+
+        datePicker.setOnAction(e -> {
+            if(datePicker.getValue() != null){
+                LocalDate selectedDate = datePicker.getValue();
+                String format = selectedDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                dailyLogCorrectForm.setText(format);
+            } 
+        });
+
+        root.getChildren().addAll(info, weight, foodlb, foodsBox, log, inputLayout, lblName, recepieNameInput,
+                recipeBox, quantityBox, setRecipe, recipeInputLayout, dailyCalories);
+
+        scene = new Scene(root, 800, 1500);
         stage.setScene(scene);
         stage.show();
     }
@@ -199,6 +242,19 @@ public class HomeUI implements UI {
             number.addAll(i);
         }
         box.setItems(number);
+    }
+
+    public static <E> void addDailyLog(ArrayList<E> array, TextArea textArea){
+        textArea.clear();
+        if(array.size() != 0){
+            for (int i = 0; i < array.size(); i++) {
+                textArea.appendText(array.get(i).toString() + "\n");
+            }
+        }
+        else{
+            textArea.appendText("No Inputs for selected Date");
+        }
+        
     }
 
     public String addBasicFood(){

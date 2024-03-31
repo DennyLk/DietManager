@@ -22,6 +22,10 @@ public class DietModel {
     public void setFoods(ArrayList<Food> foods) {
         this.foods = foods;
     }
+
+    public ArrayList<Log> getDailyLog(){
+        return Log.getDailyLog();
+    }
     
 
     public ArrayList<Log> getfLog() {
@@ -50,6 +54,10 @@ public class DietModel {
         wLog = Log.getwLog();
     }
 
+    public static void addDailyLog(String date){
+        Log.dailyLog(date);
+    }
+
     public static void logSelectedFood(String foodName) {
         String[] data = foodName.split(":");
         Log log = new Log(data[0], data[1], LocalDate.now().toString());
@@ -76,4 +84,6 @@ public class DietModel {
         Recipe r = new Recipe(parts[0], recipeParts);
         r.addRecipe();
     }
+
+    
 }
