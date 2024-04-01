@@ -18,6 +18,10 @@ public class DietModel {
         return foods;
     }
 
+    public Double getDailyCalories(){
+        return Log.getDailyCalories();
+    }
+
 
     public void setFoods(ArrayList<Food> foods) {
         this.foods = foods;

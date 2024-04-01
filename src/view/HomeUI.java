@@ -244,17 +244,18 @@ public class HomeUI implements UI {
         box.setItems(number);
     }
 
-    public static <E> void addDailyLog(ArrayList<E> array, TextArea textArea){
+    public static <E> void addDailyLog(ArrayList<E> array, TextArea textArea, Double totalCalories){
         textArea.clear();
         if(array.size() != 0){
             for (int i = 0; i < array.size(); i++) {
                 textArea.appendText(array.get(i).toString() + "\n");
             }
+            textArea.appendText("-------------------------------------- \n");
+            textArea.appendText("Total calories for chosen date: " + totalCalories);
         }
         else{
             textArea.appendText("No Inputs for selected Date");
-        }
-        
+        }   
     }
 
     public String addBasicFood(){
