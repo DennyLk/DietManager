@@ -39,7 +39,7 @@ public class DietController {
             ((HomeUI) ui).getDailyButton()
                     .setOnAction(e -> {
                         DietModel.addDailyLog(((HomeUI) ui).getDailyLogCorrectForm().getText());
-                        HomeUI.addDailyLog(model.getDailyLog(), HomeUI.getDailyLog());
+                        HomeUI.addDailyLog(model.getDailyLog(), HomeUI.getDailyLog(), model.getDailyCalories());
                     });
                         
             ((HomeUI) ui).getAddBasicFoodButton()

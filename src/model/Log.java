@@ -14,6 +14,7 @@ public class Log {
     private static ArrayList<Log> fLog = new ArrayList<>();
     private static ArrayList<Log> wLog = new ArrayList<>();
     private static ArrayList<Log> dailyLog = new ArrayList<>();
+    private static double dailyCalories;
 
     public static final String PATH = "./assets/log.csv";
 
@@ -28,6 +29,10 @@ public class Log {
     public Log(String weight, String date) {
         this.weight = weight;
         this.date = date;
+    }
+
+    public static double getDailyCalories() {
+        return dailyCalories;
     }
 
     public static ArrayList<Log> getDailyLog() {
@@ -78,15 +83,17 @@ public class Log {
     }
 
     public static void dailyLog(String date){
+        dailyCalories = 0.0;
         dailyLog.clear();
         ArrayList<Log> food = getfLog();
         for (int i = 0; i < food.size(); i++) {
             if(food.get(i).date.equals(date)){
                 dailyLog.add(food.get(i));
+                String[] data = food.get(i).nutritions.split(" ");
+                dailyCalories += Double.parseDouble(data[1]);
             }
         }
     }
-    
 
     public void logFood() {
        
