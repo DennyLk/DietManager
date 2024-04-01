@@ -2,6 +2,8 @@ package view;
 
 import java.util.ArrayList;
 
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -24,15 +26,24 @@ public class WeightUI implements UI {
     public void display() {
         stage.setTitle("Weight");
 
-        VBox root = new VBox(8);
+        VBox root = new VBox(10);
+        root.setAlignment(Pos.CENTER);
+        root.setPadding(new Insets(15, 20, 15, 20));
 
-        Label weightlb = new Label("Weight Log:");
+        Label titleLbl = new Label("Weight Log");
+        titleLbl.setStyle("-fx-font-size: 20px; -fx-font-weight: bold;");
+
+        Label weightLbl = new Label("Weight History:");
         weightBox.setEditable(false);
 
-        Button info = new Button("Back");
-        info.setOnAction(e -> backBtn());
+        Button backBtn = new Button("Back");
+        backBtn.setOnAction(e -> backBtn());
+        
+        // Adding a label above the back button for additional information or spacing
+        Label spacerLabel = new Label(); // Acts as a spacer
+        spacerLabel.setPrefHeight(20);
 
-        root.getChildren().addAll(weightlb, weightBox, info);
+        root.getChildren().addAll(titleLbl, weightLbl, weightBox, spacerLabel, backBtn);
 
         scene = new Scene(root, 750, 600);
         stage.setScene(scene);
