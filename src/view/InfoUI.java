@@ -2,6 +2,8 @@ package view;
 
 import java.util.ArrayList;
 
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -28,15 +30,23 @@ public class InfoUI implements UI {
     public void display() {
         stage.setTitle("Info");
 
-        VBox root = new VBox(8);
+        VBox root = new VBox(10);
+        root.setAlignment(Pos.CENTER);
+        root.setPadding(new Insets(15, 20, 15, 20));
+
+        Label titleLbl = new Label("Information Log");
+        titleLbl.setStyle("-fx-font-size: 20px; -fx-font-weight: bold;");
 
         Label loglb = new Label("Daily Log:");
         logBox.setEditable(false);
 
         back = new Button("Back");
 
+        // Adding a label above the back button for additional information or spacing
+        Label spacerLabel = new Label(); // Acts as a spacer
+        spacerLabel.setPrefHeight(20);
 
-        root.getChildren().addAll(loglb, logBox, back);
+        root.getChildren().addAll(titleLbl, loglb, logBox, spacerLabel, back);
 
         scene = new Scene(root, 750, 600);
         stage.setScene(scene);
