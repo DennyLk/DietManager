@@ -60,11 +60,17 @@ public class DietController {
                     });
 
             ((HomeUI) ui).getInfo().setOnAction(e -> run(primaryStage, "Info"));
+            ((HomeUI) ui).getWeight().setOnAction(e -> run(primaryStage, "Weight"));
         } else if (ui instanceof InfoUI) {
             Log.getData();
             InfoUI.setLog(model.getfLog());
 
             ((InfoUI) ui).getBack().setOnAction(e -> run(primaryStage, "Home"));
+        }
+        else if (ui instanceof WeightUI) {
+            Log.getData();
+            WeightUI.setWeight(model.getwLog());
+            ((WeightUI) ui).getBackBtn().setOnAction(e -> run(primaryStage, "Home"));
         }
     }
 }

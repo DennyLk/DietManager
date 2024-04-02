@@ -17,7 +17,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import model.Food;
 
 public class HomeUI implements UI {
     private Stage stage;
@@ -31,6 +30,9 @@ public class HomeUI implements UI {
     Button log;
     static DatePicker logCertainDate;
     static TextField certainDateField;
+    Button weight;
+
+
 
     Button setRecipe;
     Button info;
@@ -49,6 +51,10 @@ public class HomeUI implements UI {
 
     public static TextField getCertainDateField() {
         return certainDateField;
+    }
+
+    public Button getWeight() {
+        return weight;
     }
 
     public static DatePicker getLogCertainDate() {
@@ -125,8 +131,7 @@ public class HomeUI implements UI {
         info = new Button("Check your daily intake");
 
 
-        Button weight = new Button("Check your weight");
-        weight.setOnAction(e -> openWeightUI());
+        weight = new Button("Check your weight");
 
         Label foodlb = new Label("Foods:");
         HBox hBox1 = new HBox();
@@ -243,14 +248,9 @@ public class HomeUI implements UI {
         stage.show();
     }
 
-    public void openWeightUI() {
-        UI infoUI = UIFactory.createUI("Weight", stage);
-        infoUI.display();
-    }
-
-    public static void setFoods(ArrayList<Food> list, ComboBox<String> box) {
+public static <E> void setFoods(ArrayList<E> list, ComboBox<String> box) {
         ObservableList<String> foodNames = FXCollections.observableArrayList();
-        for (Food food : list) {
+        for (E food : list) {
             foodNames.addAll(food.toString());
         }
         box.setItems(foodNames);
