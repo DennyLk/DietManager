@@ -8,6 +8,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class Log {
 
@@ -75,6 +77,13 @@ public class Log {
                 }
             }
             bufferedReader.close();
+
+            Collections.sort(fLog, new Comparator<Log>() {
+                @Override
+                public int compare(Log o1, Log o2) {
+                    return o1.date.compareTo(o2.date);
+                }    
+            });
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException ioe) {
