@@ -15,11 +15,16 @@ import model.Log;
 public class WeightUI implements UI {
     private Stage stage;
     private Scene scene;
-        private static TextArea weightBox = new TextArea();
+    Button backBtn;
 
+    private static TextArea weightBox = new TextArea();
 
     public WeightUI(Stage stage) {
         this.stage = stage;
+    }
+
+    public Button getBackBtn() {
+        return backBtn;
     }
 
     @Override
@@ -36,9 +41,9 @@ public class WeightUI implements UI {
         Label weightLbl = new Label("Weight History:");
         weightBox.setEditable(false);
 
-        Button backBtn = new Button("Back");
+        backBtn = new Button("Back");
         backBtn.setOnAction(e -> backBtn());
-        
+
         // Adding a label above the back button for additional information or spacing
         Label spacerLabel = new Label(); // Acts as a spacer
         spacerLabel.setPrefHeight(20);
@@ -50,8 +55,7 @@ public class WeightUI implements UI {
         stage.show();
     }
 
-    
-        public static void setWeight(ArrayList<Log> list) {
+    public static void setWeight(ArrayList<Log> list) {
         if (list.size() == 0) {
             weightBox.setText("No Weight Logged");
         } else {
