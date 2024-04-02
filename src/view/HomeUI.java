@@ -29,6 +29,9 @@ public class HomeUI implements UI {
     TextField recipeInput;
     TextField recepieNameInput;
     Button log;
+    static DatePicker logCertainDate;
+    static TextField certainDateField;
+
     Button setRecipe;
     Button info;
     Button dailyButton;
@@ -42,6 +45,14 @@ public class HomeUI implements UI {
 
     public HomeUI(Stage stage) {
         this.stage = stage;
+    }
+
+    public static TextField getCertainDateField() {
+        return certainDateField;
+    }
+
+    public static DatePicker getLogCertainDate() {
+        return logCertainDate;
     }
 
     public static TextArea getDailyLog() {
@@ -118,9 +129,16 @@ public class HomeUI implements UI {
         weight.setOnAction(e -> openWeightUI());
 
         Label foodlb = new Label("Foods:");
+        HBox hBox1 = new HBox();
         foodsBox.setEditable(false);
+        logCertainDate = new DatePicker();
+        hBox1.getChildren().addAll(foodsBox, logCertainDate);
+        hBox1.setSpacing(10);
 
+        certainDateField = new TextField();
         log = new Button("Log");
+
+        handleDatePicker(logCertainDate, certainDateField);
 
         // foodInput = new TextField();
 
@@ -207,15 +225,17 @@ public class HomeUI implements UI {
         dailyCalories.setAlignment(Pos.CENTER);
         dailyLogCorrectForm = new TextField();
 
-        datePicker.setOnAction(e -> {
-            if(datePicker.getValue() != null){
-                LocalDate selectedDate = datePicker.getValue();
-                String format = selectedDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-                dailyLogCorrectForm.setText(format);
-            } 
-        });
+        handleDatePicker(datePicker, dailyLogCorrectForm);
 
-        root.getChildren().addAll(info, weight, foodlb, foodsBox, log, inputLayout, lblName, recepieNameInput,
+        // datePicker.setOnAction(e -> {
+        //     if(datePicker.getValue() != null){
+        //         LocalDate selectedDate = datePicker.getValue();
+        //         String format = selectedDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        //         dailyLogCorrectForm.setText(format);
+        //     } 
+        // });
+
+        root.getChildren().addAll(info, weight, foodlb, hBox1, log, inputLayout, lblName, recepieNameInput,
                 recipeBox, quantityBox, setRecipe, recipeInputLayout, dailyCalories);
 
         scene = new Scene(root, 800, 1500);
@@ -258,6 +278,16 @@ public class HomeUI implements UI {
         }   
     }
 
+    public static void handleDatePicker(DatePicker datePicker, TextField textField){
+        datePicker.setOnAction(e -> {
+            if(datePicker.getValue() != null){
+                LocalDate selectedDate = datePicker.getValue();
+                String format = selectedDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                textField.setText(format);
+            } 
+        });
+    }
+
     public String addBasicFood(){
         String name = basicFoodName.getText();
         double calories = Double.parseDouble(basicFoodCalories.getText());
@@ -266,7 +296,6 @@ public class HomeUI implements UI {
         double fats = Double.parseDouble(basicFoodFats.getText());
 
         return String.format("%s,%f,%f,%f,%f", name, calories, proteins, carbs, fats);
-
     }
 
 }

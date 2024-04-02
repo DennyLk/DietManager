@@ -38,6 +38,7 @@ public class DietController {
                     });
             ((HomeUI) ui).getDailyButton()
                     .setOnAction(e -> {
+                        DietModel.updateLog();
                         DietModel.addDailyLog(((HomeUI) ui).getDailyLogCorrectForm().getText());
                         HomeUI.addDailyLog(model.getDailyLog(), HomeUI.getDailyLog(), model.getDailyCalories());
                     });
@@ -49,7 +50,14 @@ public class DietController {
                         HomeUI.setFoods(model.getFoods(), HomeUI.getRecipeBox());
                     });
             ((HomeUI) ui).getLog().setOnAction(
-                    e -> DietModel.logSelectedFood(HomeUI.getFoodsBox().getSelectionModel().getSelectedItem()));
+                    e -> {
+                        if(HomeUI.getLogCertainDate().getValue() == null){
+                            DietModel.logSelectedFood(HomeUI.getFoodsBox().getSelectionModel().getSelectedItem());
+                        }
+                        else{
+                            DietModel.logSelectedFood(HomeUI.getFoodsBox().getSelectionModel().getSelectedItem(), HomeUI.getCertainDateField().getText());
+                        }
+                    });
 
             ((HomeUI) ui).getInfo().setOnAction(e -> run(primaryStage, "Info"));
         } else if (ui instanceof InfoUI) {

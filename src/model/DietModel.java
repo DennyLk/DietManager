@@ -58,14 +58,28 @@ public class DietModel {
         wLog = Log.getwLog();
     }
 
+    public static void updateLog(){
+        Log.getData();
+    }
+
     public static void addDailyLog(String date){
         Log.dailyLog(date);
     }
 
-    public static void logSelectedFood(String foodName) {
+    public static void logSelectedFood(String foodName, String date) {
         String[] data = foodName.split(":");
-        Log log = new Log(data[0], data[1], LocalDate.now().toString());
-        log.logFood();
+        if(date != null){
+            Log log = new Log(data[0], data[1], date);
+            log.logFood();
+        }
+        else{
+            Log log = new Log(data[0], data[1], LocalDate.now().toString());
+            log.logFood();
+        }
+    }
+
+    public static void logSelectedFood(String foodName){
+        logSelectedFood(foodName, null);
     }
 
     public static void addFood(String foodName) {
