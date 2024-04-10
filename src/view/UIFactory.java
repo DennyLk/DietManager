@@ -12,6 +12,8 @@ public class UIFactory {
                 return new InfoUI(stage);
             case "Weight":
                 return new WeightUI(stage);
+            case "Add":
+                return new AddUI(stage);
             default:
                 throw new IllegalArgumentException("Unknown UI type: " + uiType);
         }

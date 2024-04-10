@@ -42,7 +42,6 @@ public class WeightUI implements UI {
         weightBox.setEditable(false);
 
         backBtn = new Button("Back");
-        backBtn.setOnAction(e -> backBtn());
 
         // Adding a label above the back button for additional information or spacing
         Label spacerLabel = new Label(); // Acts as a spacer
@@ -63,10 +62,5 @@ public class WeightUI implements UI {
                 weightBox.appendText(log.toString() + "\n");
             }
         }
-    }
-
-    public void backBtn() {
-        UI homeUI = UIFactory.createUI("Home", stage);
-        homeUI.display();
     }
 }

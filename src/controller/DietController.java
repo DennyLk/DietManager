@@ -3,6 +3,7 @@ package controller;
 import javafx.stage.Stage;
 import model.DietModel;
 import model.Log;
+import view.AddUI;
 import view.HomeUI;
 import view.InfoUI;
 import view.UI;
@@ -42,7 +43,7 @@ public class DietController {
                         DietModel.addDailyLog(((HomeUI) ui).getDailyLogCorrectForm().getText());
                         HomeUI.addDailyLog(model.getDailyLog(), HomeUI.getDailyLog(), model.getDailyCalories());
                     });
-                        
+
             ((HomeUI) ui).getAddBasicFoodButton()
                     .setOnAction(e -> {
                         DietModel.addFood(((HomeUI) ui).addBasicFood());
@@ -51,26 +52,28 @@ public class DietController {
                     });
             ((HomeUI) ui).getLog().setOnAction(
                     e -> {
-                        if(HomeUI.getLogCertainDate().getValue() == null){
+                        if (HomeUI.getLogCertainDate().getValue() == null) {
                             DietModel.logSelectedFood(HomeUI.getFoodsBox().getSelectionModel().getSelectedItem());
-                        }
-                        else{
-                            DietModel.logSelectedFood(HomeUI.getFoodsBox().getSelectionModel().getSelectedItem(), HomeUI.getCertainDateField().getText());
+                        } else {
+                            DietModel.logSelectedFood(HomeUI.getFoodsBox().getSelectionModel().getSelectedItem(),
+                                    HomeUI.getCertainDateField().getText());
                         }
                     });
 
             ((HomeUI) ui).getInfo().setOnAction(e -> run(primaryStage, "Info"));
             ((HomeUI) ui).getWeight().setOnAction(e -> run(primaryStage, "Weight"));
+            ((HomeUI) ui).getAdd().setOnAction(e -> run(primaryStage, "Add"));
         } else if (ui instanceof InfoUI) {
             Log.getData();
             InfoUI.setLog(model.getfLog());
 
             ((InfoUI) ui).getBack().setOnAction(e -> run(primaryStage, "Home"));
-        }
-        else if (ui instanceof WeightUI) {
+        } else if (ui instanceof WeightUI) {
             Log.getData();
             WeightUI.setWeight(model.getwLog());
             ((WeightUI) ui).getBackBtn().setOnAction(e -> run(primaryStage, "Home"));
+        } else if (ui instanceof AddUI) {
+            ((AddUI) ui).getBackBtn().setOnAction(e -> run(primaryStage, "Home"));
         }
     }
 }
