@@ -32,6 +32,7 @@ public class HomeUI implements UI {
     static DatePicker logCertainDate;
     static TextField certainDateField;
     Button weight;
+    Button add;
 
     Button setRecipe;
     Button info;
@@ -54,6 +55,10 @@ public class HomeUI implements UI {
 
     public Button getWeight() {
         return weight;
+    }
+
+    public Button getAdd() {
+        return add;
     }
 
     public static DatePicker getLogCertainDate() {
@@ -130,10 +135,12 @@ public class HomeUI implements UI {
         info = new Button("Check your daily intake");
 
         weight = new Button("Check your weight");
+        add = new Button("Add Foods");
+
 
         HBox otherUi = new HBox();
         otherUi.setSpacing(10);
-        otherUi.getChildren().addAll(info, weight);
+        otherUi.getChildren().addAll(info, weight, add);
 
         Label foodlb = new Label("Foods:");
         HBox hBox1 = new HBox();
