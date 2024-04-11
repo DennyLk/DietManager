@@ -74,6 +74,13 @@ public class DietController {
             ((WeightUI) ui).getBackBtn().setOnAction(e -> run(primaryStage, "Home"));
         } else if (ui instanceof AddUI) {
             ((AddUI) ui).getBackBtn().setOnAction(e -> run(primaryStage, "Home"));
+            ((AddUI) ui).getLogCalorieGoal().setOnAction(e -> {
+                if(AddUI.getCalorieGoalDate().getValue() != null) {
+                    DietModel.logCalorieGoal(AddUI.getCalorieGoal().getText(), AddUI.getCalorieGoalDate().getValue().toString());
+                } else {
+                    DietModel.logCalorieGoal(AddUI.getCalorieGoal().getText());
+                }
+            });
         }
     }
 }

@@ -19,9 +19,16 @@ public class Log {
 
     public static final String PATH = "./assets/log.csv";
 
-    private String foodName, nutritions, date, weight;
+    private String logType, foodName, nutritions, date, weight, calories;
 
-    public Log(String foodName, String nutritions, String date) {
+    public Log(String logType, String date, String calories) {
+        this.logType = logType;
+        this.date = date;
+        this.calories = calories;
+    }
+
+    public Log(String logType, String foodName, String nutritions, String date) {
+        this.logType = logType;
         this.foodName = foodName;
         this.nutritions = nutritions;
         this.date = date;
@@ -69,7 +76,7 @@ public class Log {
                 String[] data = line.split(":");
                 if (data[0].equals("f")) {
                     // Assuming the format is: f,foodName,calories,date
-                    fLog.add(new Log(data[1], data[2], data[3]));
+                    fLog.add(new Log(null, data[1], data[2], data[3]));
                 } else if (data[0].equals("w")) {
                     // Assuming the format is: w,weight,date
                     wLog.add(new Log(data[1], data[2]));
@@ -81,7 +88,7 @@ public class Log {
                 @Override
                 public int compare(Log o1, Log o2) {
                     return o1.date.compareTo(o2.date);
-                }    
+                }
             });
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -90,12 +97,12 @@ public class Log {
         }
     }
 
-    public static void dailyLog(String date){
+    public static void dailyLog(String date) {
         dailyCalories = 0.0;
         dailyLog.clear();
         ArrayList<Log> food = getfLog();
         for (int i = 0; i < food.size(); i++) {
-            if(food.get(i).date.equals(date)){
+            if (food.get(i).date.equals(date)) {
                 dailyLog.add(food.get(i));
                 String[] data = food.get(i).nutritions.split(" ");
                 dailyCalories += Double.parseDouble(data[1]);
@@ -103,10 +110,9 @@ public class Log {
         }
     }
 
-    public void logFood() {
-       
+    public void log() {
         try (FileWriter fw = new FileWriter("./assets/log.csv", true);
-             BufferedWriter bw = new BufferedWriter(fw)) {
+                BufferedWriter bw = new BufferedWriter(fw)) {
             bw.write(this.toCsv());
         } catch (IOException e) {
             e.printStackTrace();
@@ -114,7 +120,14 @@ public class Log {
     }
 
     public String toCsv() {
-        String logEntry = "f:" + foodName + ":" + nutritions + ":" + date + "\n";
+        String logEntry = "";
+        String[] parsDateData = date.split("-");
+        String parsedDate = parsDateData[0] + "," + parsDateData[1] + "," + parsDateData[2];
+        if (logType == "f") {
+            logEntry = "f:" + foodName + ":" + nutritions + ":" + date + "\n";
+        } else if (logType == "c") {
+            logEntry = parsedDate + "," + logType + "," + calories + "\n";
+        }
         return logEntry;
     }
 

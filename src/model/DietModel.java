@@ -69,17 +69,32 @@ public class DietModel {
     public static void logSelectedFood(String foodName, String date) {
         String[] data = foodName.split(":");
         if(date != null){
-            Log log = new Log(data[0], data[1], date);
-            log.logFood();
+            Log log = new Log("f", data[0], data[1], date);
+            log.log();
         }
         else{
-            Log log = new Log(data[0], data[1], LocalDate.now().toString());
-            log.logFood();
+            Log log = new Log("f", data[0], data[1], LocalDate.now().toString());
+            log.log();
         }
     }
 
     public static void logSelectedFood(String foodName){
         logSelectedFood(foodName, null);
+    }
+
+    public static void logCalorieGoal(String calories, String date) {
+        if(date != null){
+            Log log = new Log("c", date, calories);
+            log.log();
+        }
+        else{
+            Log log = new Log("c", LocalDate.now().toString(), calories);
+            log.log();
+        }
+    }
+
+    public static void logCalorieGoal(String calories){
+        logCalorieGoal(calories, null);
     }
 
     public static void addFood(String foodName) {
