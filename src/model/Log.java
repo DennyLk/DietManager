@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -73,10 +74,11 @@ public class Log {
             BufferedReader bufferedReader = new BufferedReader(new FileReader(PATH));
             String line = "";
             while ((line = bufferedReader.readLine()) != null) {
-                String[] data = line.split(":");
-                if (data[0].equals("f")) {
-                    // Assuming the format is: f,foodName,calories,date
-                    fLog.add(new Log(null, data[1], data[2], data[3]));
+                String[] data = line.split(",");
+                if (data[3].equals("f")) {
+                    String nutritions = data[5] + "," + data[6] + "," +data[7] + "," +data[8];
+                    String date = data[0] + "-" + data[1] + "-" + data[2];
+                    fLog.add(new Log(data[3], data[4], nutritions, date));
                 } else if (data[0].equals("w")) {
                     // Assuming the format is: w,weight,date
                     wLog.add(new Log(data[1], data[2]));
@@ -98,6 +100,9 @@ public class Log {
     }
 
     public static void dailyLog(String date) {
+        if (date.isEmpty()) {
+            date = LocalDate.now().toString();
+        }
         dailyCalories = 0.0;
         dailyLog.clear();
         ArrayList<Log> food = getfLog();
@@ -124,7 +129,7 @@ public class Log {
         String[] parsDateData = date.split("-");
         String parsedDate = parsDateData[0] + "," + parsDateData[1] + "," + parsDateData[2];
         if (logType == "f") {
-            logEntry = "f:" + foodName + ":" + nutritions + ":" + date + "\n";
+            logEntry = parsedDate + "," + logType + "," + foodName + "," + nutritions + "\n";
         } else if (logType == "c") {
             logEntry = parsedDate + "," + logType + "," + calories + "\n";
         }

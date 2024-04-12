@@ -137,7 +137,6 @@ public class HomeUI implements UI {
         weight = new Button("Check your weight");
         add = new Button("Add Foods");
 
-
         HBox otherUi = new HBox();
         otherUi.setSpacing(10);
         otherUi.getChildren().addAll(info, weight, add);
@@ -266,9 +265,10 @@ public class HomeUI implements UI {
         hBox.setPadding(new Insets(0, 0, 20, 0));
 
         datePicker = new DatePicker();
+        datePicker.setPromptText("Choose a Date");
+
         dailyLog = new TextArea();
         dailyButton = new Button("Create Daily Log");
-
 
         hBox.getChildren().addAll(datePicker, dailyButton);
         hBox.setAlignment(Pos.CENTER);
