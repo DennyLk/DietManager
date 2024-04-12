@@ -1,5 +1,7 @@
 package controller;
 
+import java.time.LocalDate;
+
 import javafx.stage.Stage;
 import model.DietModel;
 import model.Log;
@@ -30,6 +32,10 @@ public class DietController {
             HomeUI.setFoods(model.getFoods(), HomeUI.getFoodsBox());
             HomeUI.setFoods(model.getFoods(), HomeUI.getRecipeBox());
             HomeUI.setQuantity(10, HomeUI.getQuantityBox());
+
+            DietModel.updateLog();
+            DietModel.addDailyLog(LocalDate.now().toString());
+            HomeUI.addDailyLog(model.getDailyLog(), HomeUI.getDailyLog(), model.getDailyCalories());
             ((HomeUI) ui).getAddButton().setOnAction(e -> DietModel.addFood(((HomeUI) ui).getFoodInput().getText()));
             ((HomeUI) ui).getAddRecipeButton()
                     .setOnAction(e -> {
@@ -58,6 +64,10 @@ public class DietController {
                             DietModel.logSelectedFood(HomeUI.getFoodsBox().getSelectionModel().getSelectedItem(),
                                     HomeUI.getCertainDateField().getText());
                         }
+
+                        DietModel.updateLog();
+                        DietModel.addDailyLog(((HomeUI) ui).getDailyLogCorrectForm().getText());
+                        HomeUI.addDailyLog(model.getDailyLog(), HomeUI.getDailyLog(), model.getDailyCalories());
                     });
 
             ((HomeUI) ui).getInfo().setOnAction(e -> run(primaryStage, "Info"));
@@ -75,8 +85,9 @@ public class DietController {
         } else if (ui instanceof AddUI) {
             ((AddUI) ui).getBackBtn().setOnAction(e -> run(primaryStage, "Home"));
             ((AddUI) ui).getLogCalorieGoal().setOnAction(e -> {
-                if(AddUI.getCalorieGoalDate().getValue() != null) {
-                    DietModel.logCalorieGoal(AddUI.getCalorieGoal().getText(), AddUI.getCalorieGoalDate().getValue().toString());
+                if (AddUI.getCalorieGoalDate().getValue() != null) {
+                    DietModel.logCalorieGoal(AddUI.getCalorieGoal().getText(),
+                            AddUI.getCalorieGoalDate().getValue().toString());
                 } else {
                     DietModel.logCalorieGoal(AddUI.getCalorieGoal().getText());
                 }
