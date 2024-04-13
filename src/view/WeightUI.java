@@ -55,11 +55,12 @@ public class WeightUI implements UI {
     }
 
     public static void setWeight(ArrayList<Log> list) {
+        weightBox.clear();
         if (list.size() == 0) {
             weightBox.setText("No Weight Logged");
         } else {
             for (Log log : list) {
-                weightBox.appendText(log.toString() + "\n");
+                weightBox.appendText(log.weightFormat() + "\n");
             }
         }
     }

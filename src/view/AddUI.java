@@ -16,13 +16,30 @@ public class AddUI implements UI {
     static DatePicker calorieGoalDate;
     Button logCalorieGoal;
 
+    static TextField weight;
+    static DatePicker weightDate;
+    Button logWeight;
+
     public AddUI(Stage stage) {
         this.stage = stage;
+    }
+
+    public static TextField getWeight() {
+        return weight;
+    }
+
+    public static DatePicker getWeightDate() {
+        return weightDate;
+    }
+
+    public Button getLogWeight() {
+        return logWeight;
     }
 
     public static TextField getCalorieGoal() {
         return calorieGoal;
     }
+
     public static DatePicker getCalorieGoalDate() {
         return calorieGoalDate;
     }
@@ -46,9 +63,17 @@ public class AddUI implements UI {
         calorieGoalDate = new DatePicker();
         logCalorieGoal = new Button("Add Daily Calorie Goal");
 
+        Label weightLbl = new Label("Log your weight");
+        weight = new TextField();
+        weight.setMaxWidth(100);
+        weightDate = new DatePicker();
+        logWeight = new Button("Log Weight");
+
         backBtn = new Button("Back");
 
-        root.getChildren().addAll(lbl, calorieGoal, calorieGoalDate, logCalorieGoal, backBtn);
+        root.getChildren().addAll(lbl, calorieGoal, calorieGoalDate, logCalorieGoal,
+                weightLbl, weight, weightDate, logWeight,
+                backBtn);
 
         scene = new Scene(root, 750, 600);
         stage.setScene(scene);

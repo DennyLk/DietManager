@@ -135,7 +135,7 @@ public class HomeUI implements UI {
         info = new Button("Check your daily intake");
 
         weight = new Button("Check your weight");
-        add = new Button("Add Foods");
+        add = new Button("Add Foods | Log Weight");
 
         HBox otherUi = new HBox();
         otherUi.setSpacing(10);
