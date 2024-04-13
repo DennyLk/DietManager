@@ -82,6 +82,23 @@ public class DietModel {
         logSelectedFood(foodName, null);
     }
 
+    public static void logSelectedWeight(String weight, String date) {
+        if(date != null){
+            Log log = new Log(weight, date);
+            log.setLogType("w");
+            log.log();
+        }
+        else{
+            Log log = new Log(weight, LocalDate.now().toString());
+            log.setLogType("w");
+            log.log();
+        }
+    }
+
+    public static void logSelectedWeight(String weight){
+        logSelectedWeight(weight, null);
+    }
+
     public static void logCalorieGoal(String calories, String date) {
         if(date != null){
             Log log = new Log("c", date, calories);

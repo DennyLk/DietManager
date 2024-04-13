@@ -40,6 +40,18 @@ public class Log {
         this.date = date;
     }
 
+    public void setLogType(String logType) {
+        this.logType = logType;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setWeight(String weight) {
+        this.weight = weight;
+    }
+
     public static double getDailyCalories() {
         return dailyCalories;
     }
@@ -70,23 +82,40 @@ public class Log {
 
     public static void getData() {
         fLog.clear();
+        wLog.clear();
         try {
             BufferedReader bufferedReader = new BufferedReader(new FileReader(PATH));
             String line = "";
             while ((line = bufferedReader.readLine()) != null) {
                 String[] data = line.split(",");
+                String date = data[0] + "-" + data[1] + "-" + data[2];
                 if (data[3].equals("f")) {
-                    String nutritions = data[5] + "," + data[6] + "," +data[7] + "," +data[8];
-                    String date = data[0] + "-" + data[1] + "-" + data[2];
+                    String nutritions = data[5] + "," + data[6] + "," + data[7] + "," + data[8];
                     fLog.add(new Log(data[3], data[4], nutritions, date));
-                } else if (data[0].equals("w")) {
-                    // Assuming the format is: w,weight,date
-                    wLog.add(new Log(data[1], data[2]));
+                } else if (data[3].equals("w")) {
+                    boolean isLogged = false;
+                    for (Log log : wLog) {
+                        if (log.getDate().equals(date)) {
+                            log.setWeight(data[4]);
+                            isLogged = true;
+                            break;
+                        }
+                    }
+                    if (!isLogged) {
+                        wLog.add(new Log(data[4], date));
+                    }
                 }
             }
             bufferedReader.close();
 
             Collections.sort(fLog, new Comparator<Log>() {
+                @Override
+                public int compare(Log o1, Log o2) {
+                    return o1.date.compareTo(o2.date);
+                }
+            });
+
+            Collections.sort(wLog, new Comparator<Log>() {
                 @Override
                 public int compare(Log o1, Log o2) {
                     return o1.date.compareTo(o2.date);
@@ -132,6 +161,8 @@ public class Log {
             logEntry = parsedDate + "," + logType + "," + foodName + "," + nutritions + "\n";
         } else if (logType == "c") {
             logEntry = parsedDate + "," + logType + "," + calories + "\n";
+        } else if (logType == "w") {
+            logEntry = parsedDate + "," + logType + "," + weight + "\n";
         }
         return logEntry;
     }
@@ -139,6 +170,11 @@ public class Log {
     @Override
     public String toString() {
         String text = date + ":  f:  " + foodName + ":  " + nutritions;
+        return text;
+    }
+
+    public String weightFormat() {
+        String text = "Weight on " + date + ": " + weight + "kg";
         return text;
     }
 }

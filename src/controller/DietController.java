@@ -92,6 +92,14 @@ public class DietController {
                     DietModel.logCalorieGoal(AddUI.getCalorieGoal().getText());
                 }
             });
+            ((AddUI) ui).getLogWeight().setOnAction(e -> {
+                if (AddUI.getWeightDate().getValue() != null) {
+                    DietModel.logSelectedWeight(AddUI.getWeight().getText(),
+                            AddUI.getWeightDate().getValue().toString());
+                } else {
+                    DietModel.logSelectedWeight(AddUI.getWeight().getText());
+                }
+            });
         }
     }
 }
