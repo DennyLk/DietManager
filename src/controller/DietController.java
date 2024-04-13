@@ -30,19 +30,11 @@ public class DietController {
 
         if (ui instanceof HomeUI) {
             HomeUI.setFoods(model.getFoods(), HomeUI.getFoodsBox());
-            HomeUI.setFoods(model.getFoods(), HomeUI.getRecipeBox());
-            HomeUI.setQuantity(10, HomeUI.getQuantityBox());
 
             DietModel.updateLog();
             DietModel.addDailyLog(LocalDate.now().toString());
             HomeUI.addDailyLog(model.getDailyLog(), HomeUI.getDailyLog(), model.getDailyCalories());
             ((HomeUI) ui).getAddButton().setOnAction(e -> DietModel.addFood(((HomeUI) ui).getFoodInput().getText()));
-            ((HomeUI) ui).getAddRecipeButton()
-                    .setOnAction(e -> {
-                        DietModel.addRecipe(((HomeUI) ui).getRecipeInput().getText());
-                        HomeUI.setFoods(model.getFoods(), HomeUI.getFoodsBox());
-                        HomeUI.setFoods(model.getFoods(), HomeUI.getRecipeBox());
-                    });
             ((HomeUI) ui).getDailyButton()
                     .setOnAction(e -> {
                         DietModel.updateLog();
@@ -83,6 +75,9 @@ public class DietController {
             WeightUI.setWeight(model.getwLog());
             ((WeightUI) ui).getBackBtn().setOnAction(e -> run(primaryStage, "Home"));
         } else if (ui instanceof AddUI) {
+            AddUI.setFoods(model.getFoods(), AddUI.getRecipeBox());
+            AddUI.setQuantity(10, AddUI.getQuantityBox());
+
             ((AddUI) ui).getBackBtn().setOnAction(e -> run(primaryStage, "Home"));
             ((AddUI) ui).getLogCalorieGoal().setOnAction(e -> {
                 if (AddUI.getCalorieGoalDate().getValue() != null) {
@@ -100,6 +95,19 @@ public class DietController {
                     DietModel.logSelectedWeight(AddUI.getWeight().getText());
                 }
             });
+
+            ((AddUI) ui).getAddBasicFoodButton()
+                    .setOnAction(e -> {
+                        DietModel.addFood(((AddUI) ui).addBasicFood());
+                        AddUI.setFoods(model.getFoods(), AddUI.getRecipeBox());
+                    });
+
+            ((AddUI) ui).getAddRecipeButton()
+                    .setOnAction(e -> {
+                        DietModel.addRecipe(AddUI.getRecipeInput().getText());
+                        AddUI.getRecipeInput().setText("");
+                        AddUI.setFoods(model.getFoods(), AddUI.getRecipeBox());
+                    });
         }
     }
 }
