@@ -23,18 +23,17 @@ public class HomeUI implements UI {
     private Stage stage;
     private Scene scene;
     Button addButton;
-    TextField foodInput;
     Button addRecipeButton;
-    TextField basicFoodName, basicFoodCalories, basicFoodProteins, basicFoodCarbs, basicFoodFats;
-    TextField recipeInput;
-    TextField recipeNameInput;
+    TextField exerciseMinutes;
     Button log;
     static DatePicker logCertainDate;
     static TextField certainDateField;
     Button weight;
-    Button add;
+    Button addFood;
+    Button addRecipe;
+    Button addExercise;
+    Button addWeight;
 
-    Button setRecipe;
     Button info;
     Button dailyButton;
     TextField dailyLogCorrectForm;
@@ -42,6 +41,7 @@ public class HomeUI implements UI {
     static TextArea dailyLog;
 
     private static ComboBox<String> foodsBox = new ComboBox<>();
+    private static ComboBox<String> exercisesBox = new ComboBox<>();
     private static ComboBox<String> recipeBox = new ComboBox<>();
     private static ComboBox<Integer> quantityBox = new ComboBox<>();
 
@@ -57,8 +57,20 @@ public class HomeUI implements UI {
         return weight;
     }
 
-    public Button getAdd() {
-        return add;
+    public Button getAddFood() {
+        return addFood;
+    }
+
+    public Button getAddRecipe() {
+        return addRecipe;
+    }
+
+    public Button getAddExercise() {
+        return addExercise;
+    }
+
+    public Button getAddWeight() {
+        return addWeight;
     }
 
     public static DatePicker getLogCertainDate() {
@@ -89,14 +101,6 @@ public class HomeUI implements UI {
         return addRecipeButton;
     }
 
-    public TextField getRecipeInput() {
-        return recipeInput;
-    }
-
-    public TextField getFoodInput() {
-        return foodInput;
-    }
-
     public Button getAddButton() {
         return addButton;
     }
@@ -111,6 +115,10 @@ public class HomeUI implements UI {
 
     public static ComboBox<String> getRecipeBox() {
         return recipeBox;
+    }
+
+    public static ComboBox<String> getExercisesBox() {
+        return exercisesBox;
     }
 
     public static void setRecipeBox(ComboBox<String> recipeBox) {
@@ -132,14 +140,24 @@ public class HomeUI implements UI {
         VBox root = new VBox(8);
         root.setPadding(new Insets(20, 20, 20, 20));
 
-        info = new Button("Check your daily intake");
+        info = new Button("Log history");
 
-        weight = new Button("Check your weight");
-        add = new Button("Add Foods | Log Weight");
+        weight = new Button("Weight history");
+
+        addFood = new Button("Add Food");
+        addRecipe = new Button("Add Recipe");
+        addExercise = new Button("Add Exercise");
+        addWeight = new Button("Add Weight");
 
         HBox otherUi = new HBox();
         otherUi.setSpacing(10);
-        otherUi.getChildren().addAll(info, weight, add);
+        otherUi.setAlignment(Pos.CENTER);
+        otherUi.getChildren().addAll(info, weight);
+
+        HBox addUi = new HBox();
+        addUi.setSpacing(10);
+        addUi.setAlignment(Pos.CENTER);
+        addUi.getChildren().addAll(addFood, addRecipe, addExercise, addWeight);
 
         Label foodlb = new Label("Foods:");
         HBox hBox1 = new HBox();
@@ -156,104 +174,22 @@ public class HomeUI implements UI {
 
         handleDatePicker(logCertainDate, certainDateField);
 
-        Label foodName = new Label("Enter Food Name");
-        basicFoodName = new TextField();
-        basicFoodName.setMaxWidth(400);
+        Label exerciselb = new Label("Exercises:");
+        HBox hBox2 = new HBox();
+        exercisesBox.setEditable(false);
+        exerciseMinutes = new TextField();
+        exerciseMinutes.setPromptText("Minutes");
+        logCertainDate = new DatePicker();
 
-        Label foodCalories = new Label("Enter Food Calories");
-        basicFoodCalories = new TextField();
-        basicFoodCalories.setMaxWidth(400);
+        log = new Button("Log");
 
-        Label foodProteins = new Label("Enter Food Proteins");
-        basicFoodProteins = new TextField();
-        basicFoodProteins.setMaxWidth(400);
+        hBox2.getChildren().addAll(exercisesBox, exerciseMinutes, logCertainDate, log);
+        hBox2.setSpacing(10);
+        hBox2.setPadding(new Insets(0, 0, 10, 0));
 
-        Label foodCarbs = new Label("Enter Food Carbs");
-        basicFoodCarbs = new TextField();
-        basicFoodCarbs.setMaxWidth(400);
+        certainDateField = new TextField();
 
-        Label foodFats = new Label("Enter Food Fats");
-        basicFoodFats = new TextField();
-        basicFoodFats.setMaxWidth(400);
-
-        addButton = new Button("Add Food");
-        VBox inputLayout = new VBox();
-        inputLayout.getChildren().addAll(foodName, basicFoodName, foodCalories, basicFoodCalories, foodProteins,
-                basicFoodProteins, foodCarbs, basicFoodCarbs, foodFats, basicFoodFats, addButton);
-        inputLayout.setAlignment(Pos.CENTER);
-        inputLayout.setSpacing(5);
-
-        HBox recipeLabels = new HBox();
-        recipeLabels.setPadding(new Insets(20, 0, 0, 0));
-        recipeLabels.setSpacing(300);
-        Label lblName = new Label("Add recipe name:");
-        lblName.setPadding(new Insets(0, 20, 0, 0));
-        Label recipeBoxlbl = new Label("Select Food");
-        recipeBoxlbl.setPadding(new Insets(0, 390, 0, 0));
-        Label quantityBoxlbl = new Label("Select Quantity");
-        recipeLabels.getChildren().addAll(lblName, recipeBoxlbl, quantityBoxlbl);
-
-        HBox recipeBoxes = new HBox();
-        recipeNameInput = new TextField();
-        recipeNameInput.setMaxWidth(600);
-        quantityBox.setMinWidth(100);
-        recipeBoxes.setSpacing(250);
-        recipeBoxes.getChildren().addAll(recipeNameInput, recipeBox, quantityBox);
-
-        setRecipe = new Button("Add Food To Recipe");
-
-        HBox recipeButton = new HBox();
-        setRecipe.setMinWidth(350);
-        recipeButton.setAlignment(Pos.CENTER);
-        recipeButton.setPadding(new Insets(10, 0, 0, 0));
-        recipeButton.getChildren().addAll(setRecipe);
-
-        setRecipe.setOnAction(e -> {
-            String selected = recipeBox.getValue();
-            int quantity = quantityBox.getValue();
-            String name = recipeNameInput.getText().trim();
-
-            if (selected != null && quantity != 0) {
-                String[] parts = selected.split(":");
-                String recipeName = parts[0].trim();
-
-                String current = recipeInput.getText();
-                String[] data = current.split(",");
-
-                StringBuilder currentRecipe = new StringBuilder();
-                for (int i = 1; i < data.length; i++) {
-                    currentRecipe.append(data[i] + ",");
-                }
-
-                if (currentRecipe.length() > 0) {
-                    currentRecipe.deleteCharAt(currentRecipe.length() - 1);
-                }
-
-                String currentRecipeStr = currentRecipe.toString();
-                if (!currentRecipeStr.isEmpty()) {
-                    recipeInput.setText(name + "," + currentRecipeStr + "," + recipeName + "," + quantity);
-                } else {
-                    recipeInput.setText(name + "," + recipeName + "," + quantity);
-                }
-            }
-        });
-
-        Label recipeLabel = new Label("Recipe:");
-        recipeInput = new TextField();
-        recipeInput.setEditable(false);
-
-        HBox recipeLabelLayout = new HBox();
-        recipeLabelLayout.setAlignment(Pos.CENTER);
-        recipeLabelLayout.setPadding(new Insets(20, 0, 0, 0));
-        recipeLabelLayout.getChildren().addAll(recipeLabel);
-
-        HBox recipeInputLayout = new HBox();
-        addRecipeButton = new Button("Add Recipe");
-        recipeInput.setMaxWidth(600);
-        recipeInputLayout.setSpacing(10);
-        recipeInputLayout.setPadding(new Insets(0, 0, 20, 0));
-        recipeInputLayout.getChildren().addAll(recipeInput, addRecipeButton);
-        recipeInputLayout.setAlignment(Pos.CENTER);
+        handleDatePicker(logCertainDate, certainDateField);
 
         Label dailyLogLabel = new Label("Daily Log:");
         HBox dailyLogLayout = new HBox();
@@ -279,10 +215,9 @@ public class HomeUI implements UI {
 
         handleDatePicker(datePicker, dailyLogCorrectForm);
 
-        root.getChildren().addAll(otherUi, foodlb, hBox1, inputLayout, recipeLabels,
-                recipeBoxes, recipeButton, recipeLabelLayout, recipeInputLayout, dailyLogLayout, dailyCalories);
+        root.getChildren().addAll(otherUi, addUi, foodlb, hBox1, exerciselb, hBox2, dailyLogLayout, dailyCalories);
 
-        scene = new Scene(root, 1500, 900);
+        scene = new Scene(root, 1000,600);
         stage.setScene(scene);
         stage.show();
     }
@@ -325,15 +260,4 @@ public class HomeUI implements UI {
             }
         });
     }
-
-    public String addBasicFood() {
-        String name = basicFoodName.getText();
-        double calories = Double.parseDouble(basicFoodCalories.getText());
-        double proteins = Double.parseDouble(basicFoodProteins.getText());
-        double carbs = Double.parseDouble(basicFoodCarbs.getText());
-        double fats = Double.parseDouble(basicFoodFats.getText());
-
-        return String.format("%s,%f,%f,%f,%f", name, calories, proteins, carbs, fats);
-    }
-
 }
