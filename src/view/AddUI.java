@@ -234,7 +234,7 @@ public class AddUI implements UI {
                 recipeBoxes, recipeButton, recipeLabelLayout, recipeInputLayout,
                 backBtn);
 
-        scene = new Scene(root, 1500, 900);
+        scene = new Scene(root, 1500, 1200);
         stage.setScene(scene);
         stage.show();
     }

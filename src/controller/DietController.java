@@ -34,19 +34,11 @@ public class DietController {
             DietModel.updateLog();
             DietModel.addDailyLog(LocalDate.now().toString());
             HomeUI.addDailyLog(model.getDailyLog(), HomeUI.getDailyLog(), model.getDailyCalories());
-            ((HomeUI) ui).getAddButton().setOnAction(e -> DietModel.addFood(((HomeUI) ui).getFoodInput().getText()));
             ((HomeUI) ui).getDailyButton()
                     .setOnAction(e -> {
                         DietModel.updateLog();
                         DietModel.addDailyLog(((HomeUI) ui).getDailyLogCorrectForm().getText());
                         HomeUI.addDailyLog(model.getDailyLog(), HomeUI.getDailyLog(), model.getDailyCalories());
-                    });
-
-            ((HomeUI) ui).getAddBasicFoodButton()
-                    .setOnAction(e -> {
-                        DietModel.addFood(((HomeUI) ui).addBasicFood());
-                        HomeUI.setFoods(model.getFoods(), HomeUI.getFoodsBox());
-                        HomeUI.setFoods(model.getFoods(), HomeUI.getRecipeBox());
                     });
             ((HomeUI) ui).getLog().setOnAction(
                     e -> {
@@ -64,7 +56,10 @@ public class DietController {
 
             ((HomeUI) ui).getInfo().setOnAction(e -> run(primaryStage, "Info"));
             ((HomeUI) ui).getWeight().setOnAction(e -> run(primaryStage, "Weight"));
-            ((HomeUI) ui).getAdd().setOnAction(e -> run(primaryStage, "Add"));
+            ((HomeUI) ui).getAddFood().setOnAction(e -> run(primaryStage, "Add"));
+            ((HomeUI) ui).getAddRecipe().setOnAction(e -> run(primaryStage, "Add"));
+            ((HomeUI) ui).getAddExercise().setOnAction(e -> run(primaryStage, "Add"));
+            ((HomeUI) ui).getAddWeight().setOnAction(e -> run(primaryStage, "Add"));
         } else if (ui instanceof InfoUI) {
             Log.getData();
             InfoUI.setLog(model.getfLog());
