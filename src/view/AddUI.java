@@ -27,6 +27,11 @@ public class AddUI implements UI {
     static DatePicker weightDate;
     Button logWeight;
 
+    Button addExercise;
+    TextField exerciesNameField;
+    TextField caloriesPerHourField;
+    Label exerciseLabel;
+
     TextField basicFoodName, basicFoodCalories, basicFoodProteins, basicFoodCarbs, basicFoodFats;
     Button addButton;
 
@@ -41,6 +46,18 @@ public class AddUI implements UI {
 
     public AddUI(Stage stage) {
         this.stage = stage;
+    }
+
+    public Button getAddExercise() {
+        return addExercise;
+    }
+
+    public TextField getExerciesNameField() {
+        return exerciesNameField;
+    }
+
+    public TextField getCaloriesPerHourField() {
+        return caloriesPerHourField;
     }
 
     public static TextField getWeight() {
@@ -111,19 +128,37 @@ public class AddUI implements UI {
         root.setPadding(new Insets(20));
         root.setAlignment(Pos.CENTER);
 
+
+        HBox newHbox = new HBox();
         Label lbl = new Label("Add Daily Calorie Goal");
         calorieGoal = new TextField();
         calorieGoal.setMaxWidth(300);
         calorieGoalDate = new DatePicker();
         logCalorieGoal = new Button("Add Daily Calorie Goal");
         logCalorieGoal.setMinWidth(180);
+        newHbox.setSpacing(10);
+        newHbox.setAlignment(Pos.CENTER);
+        newHbox.getChildren().addAll(lbl, calorieGoal, calorieGoalDate, logCalorieGoal);
 
+        HBox weightHBox = new HBox();
         Label weightLbl = new Label("Log your weight");
         weight = new TextField();
         weight.setMaxWidth(300);
         weightDate = new DatePicker();
         logWeight = new Button("Log Weight");
         logWeight.setMinWidth(180);
+        weightHBox.setSpacing(10);
+        weightHBox.setAlignment(Pos.CENTER);
+        weightHBox.getChildren().addAll(weightLbl,weight,weightDate,logWeight);
+
+        HBox exeBox = new HBox();
+        exeBox.setSpacing(10);
+        exerciseLabel = new Label("Add Exercise");
+        exerciesNameField = new TextField();
+        caloriesPerHourField = new TextField();
+        addExercise = new Button("Add Exercise");
+        exeBox.setAlignment(Pos.CENTER);
+        exeBox.getChildren().addAll(exerciseLabel, exerciesNameField, caloriesPerHourField, addExercise);
 
         Label foodName = new Label("Enter Food Name");
         basicFoodName = new TextField();
@@ -229,8 +264,8 @@ public class AddUI implements UI {
 
         backBtn = new Button("Back");
 
-        root.getChildren().addAll(lbl, calorieGoal, calorieGoalDate, logCalorieGoal,
-                weightLbl, weight, weightDate, logWeight, inputLayout, recipeLabels,
+        root.getChildren().addAll(newHbox,
+        weightHBox, exeBox, inputLayout, recipeLabels,
                 recipeBoxes, recipeButton, recipeLabelLayout, recipeInputLayout,
                 backBtn);
 

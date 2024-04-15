@@ -24,10 +24,17 @@ public class HomeUI implements UI {
     private Scene scene;
     Button addButton;
     Button addRecipeButton;
-    TextField exerciseMinutes;
+    static TextField exerciseMinutes;
+
     Button log;
+    Button logExercise;
+
     static DatePicker logCertainDate;
+    static DatePicker logExerciseDate;
+
     static TextField certainDateField;
+    static TextField exerciseDateField;
+
     Button weight;
     Button addFood;
     Button addRecipe;
@@ -38,15 +45,42 @@ public class HomeUI implements UI {
     Button dailyButton;
     TextField dailyLogCorrectForm;
     DatePicker datePicker;
+    Button deleteLogButton;
+
     static TextArea dailyLog;
 
     private static ComboBox<String> foodsBox = new ComboBox<>();
     private static ComboBox<String> exercisesBox = new ComboBox<>();
     private static ComboBox<String> recipeBox = new ComboBox<>();
     private static ComboBox<Integer> quantityBox = new ComboBox<>();
+    private static ComboBox<String> logBox = new ComboBox<>();
 
     public HomeUI(Stage stage) {
         this.stage = stage;
+    }
+
+    public Button getDeleteLogButton() {
+        return deleteLogButton;
+    }
+
+    public static ComboBox<String> getLogBox() {
+        return logBox;
+    }
+
+    public static TextField getExerciseMinutes() {
+        return exerciseMinutes;
+    }
+
+    public static TextField getExerciseDateField() {
+        return exerciseDateField;
+    }
+
+    public static DatePicker getLogExerciseDate() {
+        return logExerciseDate;
+    }
+
+    public Button getLogExercise() {
+        return logExercise;
     }
 
     public static TextField getCertainDateField() {
@@ -179,17 +213,16 @@ public class HomeUI implements UI {
         exercisesBox.setEditable(false);
         exerciseMinutes = new TextField();
         exerciseMinutes.setPromptText("Minutes");
-        logCertainDate = new DatePicker();
+        logExerciseDate = new DatePicker();
 
-        log = new Button("Log");
+        logExercise = new Button("Log Exercise");
+        exerciseDateField = new TextField();
 
-        hBox2.getChildren().addAll(exercisesBox, exerciseMinutes, logCertainDate, log);
+        handleDatePicker(logExerciseDate, exerciseDateField);
+
+        hBox2.getChildren().addAll(exercisesBox, exerciseMinutes, logExerciseDate, logExercise);
         hBox2.setSpacing(10);
         hBox2.setPadding(new Insets(0, 0, 10, 0));
-
-        certainDateField = new TextField();
-
-        handleDatePicker(logCertainDate, certainDateField);
 
         Label dailyLogLabel = new Label("Daily Log:");
         HBox dailyLogLayout = new HBox();
@@ -206,6 +239,13 @@ public class HomeUI implements UI {
         dailyLog = new TextArea();
         dailyButton = new Button("Create Daily Log");
 
+        HBox deleteLog = new HBox();
+        Label deleteLabel = new Label("Delete a log:");
+        deleteLogButton = new Button("Delete log");
+        deleteLog.setSpacing(10);
+        deleteLog.setAlignment(Pos.CENTER);
+        deleteLog.getChildren().addAll(deleteLabel, logBox, deleteLogButton);
+
         hBox.getChildren().addAll(datePicker, dailyButton);
         hBox.setAlignment(Pos.CENTER);
         hBox.setSpacing(10);
@@ -215,7 +255,7 @@ public class HomeUI implements UI {
 
         handleDatePicker(datePicker, dailyLogCorrectForm);
 
-        root.getChildren().addAll(otherUi, addUi, foodlb, hBox1, exerciselb, hBox2, dailyLogLayout, dailyCalories);
+        root.getChildren().addAll(otherUi, addUi, foodlb, hBox1, exerciselb, hBox2, dailyLogLayout, dailyCalories, deleteLog);
 
         scene = new Scene(root, 1000,600);
         stage.setScene(scene);
@@ -236,6 +276,22 @@ public class HomeUI implements UI {
             number.addAll(i);
         }
         box.setItems(number);
+    }
+
+    public static <E> void setExercises(ArrayList<E> list, ComboBox<String> box){
+        ObservableList<String> exercises = FXCollections.observableArrayList();
+        for (E exe : list) {
+            exercises.addAll(exe.toString());
+        }
+        box.setItems(exercises);
+    }
+
+    public static <E> void setLogs(ArrayList<E> list, ComboBox<String> box){
+        ObservableList<String> logs = FXCollections.observableArrayList();
+        for (E log : list) {
+            logs.addAll(log.toString());
+        }
+        box.setItems(logs);
     }
 
     public static <E> void addDailyLog(ArrayList<E> array, TextArea textArea, Double totalCalories) {

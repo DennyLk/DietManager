@@ -30,16 +30,40 @@ public class DietController {
 
         if (ui instanceof HomeUI) {
             HomeUI.setFoods(model.getFoods(), HomeUI.getFoodsBox());
-
+            HomeUI.setExercises(model.getExLog(), HomeUI.getExercisesBox());
             DietModel.updateLog();
             DietModel.addDailyLog(LocalDate.now().toString());
+            HomeUI.setLogs(model.loadAllLogs(), HomeUI.getLogBox());
             HomeUI.addDailyLog(model.getDailyLog(), HomeUI.getDailyLog(), model.getDailyCalories());
+            ((HomeUI) ui).getDeleteLogButton()
+                    .setOnAction(e -> {
+                        model.deleteLog(HomeUI.getLogBox().getSelectionModel().getSelectedItem());
+
+                        DietModel.updateLog();
+                        DietModel.addDailyLog(((HomeUI) ui).getDailyLogCorrectForm().getText());
+                        HomeUI.addDailyLog(model.getDailyLog(), HomeUI.getDailyLog(), model.getDailyCalories());
+                        HomeUI.setLogs(model.loadAllLogs(), HomeUI.getLogBox());
+                    });
             ((HomeUI) ui).getDailyButton()
                     .setOnAction(e -> {
                         DietModel.updateLog();
                         DietModel.addDailyLog(((HomeUI) ui).getDailyLogCorrectForm().getText());
                         HomeUI.addDailyLog(model.getDailyLog(), HomeUI.getDailyLog(), model.getDailyCalories());
+                        HomeUI.setLogs(model.loadAllLogs(), HomeUI.getLogBox());
                     });
+            ((HomeUI) ui).getLogExercise()
+                    .setOnAction(e -> {
+                        if(HomeUI.getLogExerciseDate().getValue() == null){
+                            DietModel.logSelectedExercise(HomeUI.getExercisesBox().getSelectionModel().getSelectedItem(), Double.parseDouble(HomeUI.getExerciseMinutes().getText()));
+                        }
+                        else{
+                            DietModel.logSelectedExercise(HomeUI.getExercisesBox().getSelectionModel().getSelectedItem(), Double.parseDouble(HomeUI.getExerciseMinutes().getText()), HomeUI.getExerciseDateField().getText());
+                        }
+                        DietModel.updateLog();
+                        DietModel.addDailyLog(((HomeUI) ui).getDailyLogCorrectForm().getText());
+                        HomeUI.addDailyLog(model.getDailyLog(), HomeUI.getDailyLog(), model.getDailyCalories());
+                        HomeUI.setLogs(model.loadAllLogs(), HomeUI.getLogBox());
+                    });  
             ((HomeUI) ui).getLog().setOnAction(
                     e -> {
                         if (HomeUI.getLogCertainDate().getValue() == null) {
@@ -52,6 +76,7 @@ public class DietController {
                         DietModel.updateLog();
                         DietModel.addDailyLog(((HomeUI) ui).getDailyLogCorrectForm().getText());
                         HomeUI.addDailyLog(model.getDailyLog(), HomeUI.getDailyLog(), model.getDailyCalories());
+                        HomeUI.setLogs(model.loadAllLogs(), HomeUI.getLogBox());
                     });
 
             ((HomeUI) ui).getInfo().setOnAction(e -> run(primaryStage, "Info"));
@@ -82,6 +107,7 @@ public class DietController {
                     DietModel.logCalorieGoal(AddUI.getCalorieGoal().getText());
                 }
             });
+            ((AddUI) ui).getAddExercise().setOnAction(e -> DietModel.addExercise(((AddUI) ui).getExerciesNameField().getText(),Double.parseDouble(((AddUI) ui).getCaloriesPerHourField().getText())));
             ((AddUI) ui).getLogWeight().setOnAction(e -> {
                 if (AddUI.getWeightDate().getValue() != null) {
                     DietModel.logSelectedWeight(AddUI.getWeight().getText(),
