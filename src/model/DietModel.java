@@ -3,14 +3,31 @@ package model;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import view.WeightUI;
+
 public class DietModel {
 
     private ArrayList<Food> foods = new ArrayList<>();
     private ArrayList<Log> fLog = new ArrayList<>();
     private ArrayList<Log> wLog = new ArrayList<>();
+    private ArrayList<Log> eLog = new ArrayList<>();
+    private ArrayList<Exercise> exercises = new ArrayList<>();
+
 
     public DietModel() {
 
+    }
+
+    public ArrayList<Log> getELog() {
+        return eLog;
+    }
+
+    public void setELog(ArrayList<Log> eLog) {
+        this.eLog = eLog;
+    }
+
+    public ArrayList<Exercise> getAllExercises(){
+        return this.exercises  = Exercise.readExercises();
     }
 
     public ArrayList<Food> getFoods() {
@@ -25,6 +42,15 @@ public class DietModel {
 
     public void setFoods(ArrayList<Food> foods) {
         this.foods = foods;
+    }
+
+    public ArrayList<Exercise> getExLog() {
+        getAllExercises();
+        return exercises ;
+    }
+
+    public void setExLog(ArrayList<Exercise> exercises) {
+        this.exercises = exercises;
     }
 
     public ArrayList<Log> getDailyLog(){
@@ -56,6 +82,14 @@ public class DietModel {
         Log.getData();
         fLog = Log.getfLog();
         wLog = Log.getwLog();
+        eLog = Log.getExLog();
+    }
+
+    public ArrayList<Log> loadAllLogs(){
+        ArrayList<Log> array = new ArrayList<>();
+        array.addAll(fLog);
+        array.addAll(eLog);
+        return array;
     }
 
     public static void updateLog(){
@@ -64,6 +98,10 @@ public class DietModel {
 
     public static void addDailyLog(String date){
         Log.dailyLog(date);
+    }
+
+    public void deleteLog(String log){
+        Log.delete(log);
     }
 
     public static void logSelectedFood(String foodName, String date) {
@@ -76,6 +114,21 @@ public class DietModel {
             Log log = new Log("f", data[0], data[1], LocalDate.now().toString());
             log.log();
         }
+    }
+
+    public static void logSelectedExercise(String exerciseName, double minutes, String date){
+        if(date != null){
+            Log log = new Log("e", exerciseName, minutes, date);
+            log.log();
+        }
+        else{
+            Log log = new Log("e", exerciseName, minutes, LocalDate.now().toString());
+            log.log();
+        }
+    }
+
+    public static void logSelectedExercise(String exerciseName, double minutes){
+        logSelectedExercise(exerciseName, minutes, LocalDate.now().toString());
     }
 
     public static void logSelectedFood(String foodName){
@@ -94,6 +147,7 @@ public class DietModel {
             log.log();
         }
     }
+
 
     public static void logSelectedWeight(String weight){
         logSelectedWeight(weight, null);
@@ -121,6 +175,11 @@ public class DietModel {
         bf.addBasicFood();
     }
 
+    public static void addExercise(String name, double caloriesPerHour){
+        Exercise ex = new Exercise(name, caloriesPerHour);
+        ex.addExercise(ex);
+    }
+
     public static void addRecipe(String recipe) {
         String[] parts = recipe.split(",");
         String recipeParts = "";
@@ -134,6 +193,18 @@ public class DietModel {
         Recipe r = new Recipe(parts[0], recipeParts);
         r.addRecipe();
     }
+
+    
+
+    // public Double caloriesBurnedPerHour(Exercise exercise, double time, LocalDate date){
+    //     double calories = exercise.getCaloriesPerHour();
+    //     if(date == null){
+    //         Log weight = Log.getwLog().get(Log.getwLog().size() - 1);
+            
+    //     }
+        
+    //     return null;
+    // }
 
     
 }
