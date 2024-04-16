@@ -41,7 +41,7 @@ public class HomeUI implements UI {
     Button addRecipe;
     Button addExercise;
     Button addWeight;
-
+    Button dailyCals;
     Button info;
     Button dailyButton;
     TextField dailyLogCorrectForm;
@@ -128,6 +128,10 @@ public class HomeUI implements UI {
         return addButton;
     }
 
+    public Button getDailyCals() {
+        return dailyCals;
+    }
+
     public Button getLog() {
         return log;
     }
@@ -182,7 +186,8 @@ public class HomeUI implements UI {
         addFood = new Button("Add Food");
         addRecipe = new Button("Add Recipe");
         addExercise = new Button("Add Exercise");
-        addWeight = new Button("Add Weight");
+        addWeight = new Button("Log Weight");
+        dailyCals = new Button("Add Calorie Goal");
 
         HBox otherUi = new HBox();
         otherUi.setSpacing(10);
@@ -192,7 +197,7 @@ public class HomeUI implements UI {
         HBox addUi = new HBox();
         addUi.setSpacing(10);
         addUi.setAlignment(Pos.CENTER);
-        addUi.getChildren().addAll(addFood, addRecipe, addExercise, addWeight);
+        addUi.getChildren().addAll(addFood, addRecipe, addExercise, addWeight, dailyCals);
 
         Label foodlb = new Label("Foods:");
         HBox hBox1 = new HBox();

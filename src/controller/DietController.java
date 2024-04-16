@@ -84,6 +84,7 @@ public class DietController {
             ((HomeUI) ui).getAddRecipe().setOnAction(e -> run(primaryStage, "Add"));
             ((HomeUI) ui).getAddExercise().setOnAction(e -> run(primaryStage, "Add"));
             ((HomeUI) ui).getAddWeight().setOnAction(e -> run(primaryStage, "Add"));
+            ((HomeUI) ui).getDailyCals().setOnAction(e -> run(primaryStage, "Add"));
         } else if (ui instanceof InfoUI) {
             Log.getData();
             InfoUI.setLog(model.getfLog());
