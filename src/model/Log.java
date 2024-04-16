@@ -19,12 +19,17 @@ public class Log {
     private static ArrayList<Log> exLog = new ArrayList<>();
     private static ArrayList<Log> cLog = new ArrayList<>();
     private static ArrayList<Exercise> exercises = Exercise.getExercises();
+    private static ArrayList<Food> foods = Food.loadFoods();
 
     private static double dailyCalories, goal, todaysWeight, burned, net, calorieMargin;
 
     public static final String PATH = "./assets/log.csv";
     
-    private String logType, foodName, nutritions, date, weight, calories;
+    private String logType, foodName;
+    private static String nutritions;
+    private String date;
+    private String weight;
+    private String calories;
     private String exerciseName;
     private double exerciseMinutes;
 
@@ -150,7 +155,11 @@ public class Log {
                 String[] data = line.split(",");
                 String date = data[0] + "-" + data[1] + "-" + data[2];
                 if (data[3].equals("f")) {
-                    String nutritions = data[5] + "," + data[6] + "," + data[7] + "," + data[8];
+                    for (int i = 0; i < foods.size(); i++) {
+                        if (data[4].toLowerCase().trim().equals(foods.get(i).getName().toLowerCase().trim())) {
+                            nutritions = foods.get(i).getCalories().toString();
+                        }
+                    }
                     fLog.add(new Log(data[3], data[4], nutritions, date));
                 } else if (data[3].equals("w")) {
                     boolean isLogged = false;
@@ -225,13 +234,16 @@ public class Log {
 
         dailyCalories = 0.0;
         dailyLog.clear();
-        ArrayList<Log> food = getfLog();
         ArrayList<Log> exercises = getExLog();
-        for (int i = 0; i < food.size(); i++) {
-            if (food.get(i).date.equals(date)) {
-                dailyLog.add(food.get(i));
-                String[] data = food.get(i).nutritions.split(" ");
-                dailyCalories += Double.parseDouble(data[1]);
+
+        for (int i = 0; i < fLog.size(); i++) {
+            if (fLog.get(i).date.equals(date)) {
+                dailyLog.add(fLog.get(i));
+                for (int j = 0; j < foods.size(); j++) {
+                    if (fLog.get(i).foodName.toLowerCase().trim().equals(foods.get(j).getName().toLowerCase().trim())) {
+                        dailyCalories += foods.get(j).getCalories();
+                    }
+                }
             } 
         }
         for (int i = 0; i < exercises.size(); i++) {
@@ -274,7 +286,7 @@ public class Log {
         String[] parsDateData = date.split("-");
         String parsedDate = parsDateData[0] + "," + parsDateData[1] + "," + parsDateData[2];
         if (logType == "f") {
-            logEntry = parsedDate + "," + logType + "," + foodName + "," + nutritions + "\n";
+            logEntry = parsedDate + "," + logType + "," + foodName + ",1 \n";
         } else if (logType == "c") {
             logEntry = parsedDate + "," + logType + "," + weight + "\n";
         } else if (logType == "w") {
@@ -348,7 +360,7 @@ public class Log {
             text = date + ": " + exerciseName + " for " + exerciseMinutes + " minutes";
         }
         else if(logType.equals("f")){
-            text = date + ":  f:  " + foodName + ":  " + nutritions;
+            text = date + ":  f:  " + foodName + ":  " + nutritions + " calories";
         }
         else if(logType.equals("w")){
             text = date + ": weight: " + weight;

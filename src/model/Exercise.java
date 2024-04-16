@@ -113,6 +113,6 @@ public class Exercise {
     }
 
     public String toString(){
-        return this.getName();
+        return this.getName() + ", Calories per hour: " + this.getCaloriesPerHour();
     }
 }

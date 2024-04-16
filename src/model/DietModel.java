@@ -136,12 +136,13 @@ public class DietModel {
     }
 
     public static void logSelectedExercise(String exerciseName, double minutes, String date){
+        String[] array = exerciseName.split(",");
         if(date != null){
-            Log log = new Log("e", exerciseName, minutes, date);
+            Log log = new Log("e", array[0], minutes, date);
             log.log();
         }
         else{
-            Log log = new Log("e", exerciseName, minutes, LocalDate.now().toString());
+            Log log = new Log("e", array[0], minutes, LocalDate.now().toString());
             log.log();
         }
     }
