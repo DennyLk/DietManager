@@ -39,6 +39,25 @@ public class DietModel {
         return Log.getDailyCalories();
     }
 
+    public Double getDailyGoal(){
+        return Log.getGoal();
+    }
+
+    public Double getDailyWeight(){
+        return Log.getTodaysWeight();
+    }
+
+    public Double getDailyBurned(){
+        return Log.getBurned();
+    }
+
+    public Double getDailyNet(){
+        return Log.getNet();
+    }
+
+    public Double getDailyMargin(){
+        return Log.getCalorieMargin();
+    }
 
     public void setFoods(ArrayList<Food> foods) {
         this.foods = foods;
@@ -155,11 +174,13 @@ public class DietModel {
 
     public static void logCalorieGoal(String calories, String date) {
         if(date != null){
-            Log log = new Log("c", date, calories);
+            Log log = new Log(calories, date);
+            log.setLogType("c");
             log.log();
         }
         else{
-            Log log = new Log("c", LocalDate.now().toString(), calories);
+            Log log = new Log(calories, LocalDate.now().toString());
+            log.setLogType("c");
             log.log();
         }
     }

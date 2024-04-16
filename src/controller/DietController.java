@@ -34,21 +34,21 @@ public class DietController {
             DietModel.updateLog();
             DietModel.addDailyLog(LocalDate.now().toString());
             HomeUI.setLogs(model.loadAllLogs(), HomeUI.getLogBox());
-            HomeUI.addDailyLog(model.getDailyLog(), HomeUI.getDailyLog(), model.getDailyCalories());
+            HomeUI.addDailyLog(model.getDailyLog(), HomeUI.getDailyLog(), model.getDailyCalories(), model.getDailyBurned(), model.getDailyWeight(), model.getDailyGoal(), model.getDailyNet(), model.getDailyMargin());
             ((HomeUI) ui).getDeleteLogButton()
                     .setOnAction(e -> {
                         model.deleteLog(HomeUI.getLogBox().getSelectionModel().getSelectedItem());
 
                         DietModel.updateLog();
                         DietModel.addDailyLog(((HomeUI) ui).getDailyLogCorrectForm().getText());
-                        HomeUI.addDailyLog(model.getDailyLog(), HomeUI.getDailyLog(), model.getDailyCalories());
+                        HomeUI.addDailyLog(model.getDailyLog(), HomeUI.getDailyLog(), model.getDailyCalories(), model.getDailyBurned(), model.getDailyWeight(), model.getDailyGoal(), model.getDailyNet(), model.getDailyMargin());
                         HomeUI.setLogs(model.loadAllLogs(), HomeUI.getLogBox());
                     });
             ((HomeUI) ui).getDailyButton()
                     .setOnAction(e -> {
                         DietModel.updateLog();
                         DietModel.addDailyLog(((HomeUI) ui).getDailyLogCorrectForm().getText());
-                        HomeUI.addDailyLog(model.getDailyLog(), HomeUI.getDailyLog(), model.getDailyCalories());
+                        HomeUI.addDailyLog(model.getDailyLog(), HomeUI.getDailyLog(), model.getDailyCalories(), model.getDailyBurned(), model.getDailyWeight(), model.getDailyGoal(), model.getDailyNet(), model.getDailyMargin());
                         HomeUI.setLogs(model.loadAllLogs(), HomeUI.getLogBox());
                     });
             ((HomeUI) ui).getLogExercise()
@@ -61,7 +61,7 @@ public class DietController {
                         }
                         DietModel.updateLog();
                         DietModel.addDailyLog(((HomeUI) ui).getDailyLogCorrectForm().getText());
-                        HomeUI.addDailyLog(model.getDailyLog(), HomeUI.getDailyLog(), model.getDailyCalories());
+                        HomeUI.addDailyLog(model.getDailyLog(), HomeUI.getDailyLog(), model.getDailyCalories(), model.getDailyBurned(), model.getDailyWeight(), model.getDailyGoal(), model.getDailyNet(), model.getDailyMargin());
                         HomeUI.setLogs(model.loadAllLogs(), HomeUI.getLogBox());
                     });  
             ((HomeUI) ui).getLog().setOnAction(
@@ -75,8 +75,7 @@ public class DietController {
 
                         DietModel.updateLog();
                         DietModel.addDailyLog(((HomeUI) ui).getDailyLogCorrectForm().getText());
-                        HomeUI.addDailyLog(model.getDailyLog(), HomeUI.getDailyLog(), model.getDailyCalories());
-                        HomeUI.setLogs(model.loadAllLogs(), HomeUI.getLogBox());
+                        HomeUI.addDailyLog(model.getDailyLog(), HomeUI.getDailyLog(), model.getDailyCalories(), model.getDailyBurned(), model.getDailyWeight(), model.getDailyGoal(), model.getDailyNet(), model.getDailyMargin());
                     });
 
             ((HomeUI) ui).getInfo().setOnAction(e -> run(primaryStage, "Info"));
