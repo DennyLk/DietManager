@@ -1,5 +1,6 @@
 package view;
 
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -294,14 +295,21 @@ public class HomeUI implements UI {
         box.setItems(logs);
     }
 
-    public static <E> void addDailyLog(ArrayList<E> array, TextArea textArea, Double totalCalories) {
+    public static <E> void addDailyLog(ArrayList<E> array, TextArea textArea, Double consumed, Double burned, Double weight, Double goal, Double net, Double margin) {
         textArea.clear();
+        DecimalFormat dFormat = new DecimalFormat("#.##");
         if (array.size() != 0) {
             for (int i = 0; i < array.size(); i++) {
                 textArea.appendText(array.get(i).toString() + "\n");
             }
             textArea.appendText("-------------------------------------- \n");
-            textArea.appendText("Total calories for chosen date: " + totalCalories);
+            textArea.appendText("Calorie goal: " + dFormat.format(goal) + "\n");
+            textArea.appendText("Total calories consumed: " + dFormat.format(consumed) + "\n");
+            textArea.appendText("Total calories burned: " + dFormat.format(burned) + "\n");
+            textArea.appendText("Your weight: " + dFormat.format(weight) + "\n");
+            textArea.appendText("-------------------------------------- \n");
+            textArea.appendText("Net calories for chosen date: " + dFormat.format(net) + "\n");
+            textArea.appendText(dFormat.format(margin) + " calories for reaching calorie goal for chosen date\n");
         } else {
             textArea.appendText("No Inputs for selected Date");
         }

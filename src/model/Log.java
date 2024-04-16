@@ -17,8 +17,10 @@ public class Log {
     private static ArrayList<Log> wLog = new ArrayList<>();
     private static ArrayList<Log> dailyLog = new ArrayList<>();
     private static ArrayList<Log> exLog = new ArrayList<>();
+    private static ArrayList<Log> cLog = new ArrayList<>();
+    private static ArrayList<Exercise> exercises = Exercise.getExercises();
 
-    private static double dailyCalories;
+    private static double dailyCalories, goal, todaysWeight, burned, net, calorieMargin;
 
     public static final String PATH = "./assets/log.csv";
     
@@ -49,6 +51,26 @@ public class Log {
         this.exerciseName = exerciseName;
         this.exerciseMinutes = exerciseMinutes;
         this.date = date;
+    }
+
+    public static double getCalorieMargin() {
+        return calorieMargin;
+    }
+
+    public static double getGoal() {
+        return goal;
+    }
+
+    public static double getTodaysWeight() {
+        return todaysWeight;
+    }
+
+    public static double getBurned() {
+        return burned;
+    }
+
+    public static double getNet() {
+        return net;
     }
 
     public static ArrayList<Log> getExLog() {
@@ -120,6 +142,7 @@ public class Log {
         fLog.clear();
         wLog.clear();
         exLog.clear();
+        cLog.clear();
         try {
             BufferedReader bufferedReader = new BufferedReader(new FileReader(PATH));
             String line = "";
@@ -145,32 +168,18 @@ public class Log {
                 else if(data[3].equals("e")){
                     exLog.add(new Log(data[3], data[4], Double.parseDouble(data[5]), date));
                 }
+                else if(data[3].equals("c")){
+                    Log log = new Log(data[4], date);
+                    log.setLogType("c");
+                    cLog.add(log);
+                }
             }
             bufferedReader.close();
 
-            // Collections.sort(fLog, new Comparator<Log>() {
-            //     @Override
-            //     public int compare(Log o1, Log o2) {
-            //         return o1.date.compareTo(o2.date);
-            //     }
-            // });
-
-            // Collections.sort(wLog, new Comparator<Log>() {
-            //     @Override
-            //     public int compare(Log o1, Log o2) {
-            //         return o1.date.compareTo(o2.date);
-            //     }
-            // });
-
-            // Collections.sort(exLog, new Comparator<Log>() {
-            //     @Override
-            //     public int compare(Log o1, Log o2) {
-            //         return o1.date.compareTo(o2.date);
-            //     }
-            // });
             sort(exLog);
             sort(wLog);
             sort(fLog);
+            sort(cLog);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException ioe) {
@@ -187,10 +196,33 @@ public class Log {
         });
     }
 
+    public static Double checkForLatestDate(String date, ArrayList<Log> array, Double x){
+        x = 0.0;
+        for (int i = 0; i < array.size(); i++) {
+            if(LocalDate.parse(array.get(i).date).isAfter(LocalDate.parse(date))){
+                break;
+            }
+            x = Double.parseDouble(array.get(i).weight);
+        }
+        return x;
+    }
+
     public static void dailyLog(String date) {
         if (date.isEmpty()) {
             date = LocalDate.now().toString();
         }
+        todaysWeight = checkForLatestDate(date, wLog, todaysWeight);
+        goal = checkForLatestDate(date, cLog, goal);
+
+        if(goal == 0.0){
+            goal = 2000.0;
+        }
+        if(todaysWeight == 0.0){
+            todaysWeight = 68.0;
+        }
+
+        burned =  burningEquation(exLog, date);
+
         dailyCalories = 0.0;
         dailyLog.clear();
         ArrayList<Log> food = getfLog();
@@ -200,14 +232,32 @@ public class Log {
                 dailyLog.add(food.get(i));
                 String[] data = food.get(i).nutritions.split(" ");
                 dailyCalories += Double.parseDouble(data[1]);
-            }
-            
+            } 
         }
         for (int i = 0; i < exercises.size(); i++) {
             if(exercises.get(i).date.equals(date)){
                 dailyLog.add(exercises.get(i));
             }
         }
+        net = dailyCalories - burned;
+        calorieMargin = goal - net;
+    }
+
+    public static Double burningEquation(ArrayList<Log> array, String date){
+        double x = 0.0;
+        double calories = 0.0;
+        for (int i = 0; i < array.size(); i++) {
+            if(array.get(i).date.equals(date)){
+                for (int j = 0; j < exercises.size(); j++) {
+                    if(array.get(i).exerciseName.toLowerCase().trim().equals(exercises.get(j).getName().toLowerCase().trim())){
+                        calories = exercises.get(j).getCaloriesPerHour();
+                        break;
+                    }
+                }
+                x += calories * todaysWeight * (array.get(i).exerciseMinutes/60);
+            }
+        }
+        return x;
     }
 
     public void log() {
@@ -226,7 +276,7 @@ public class Log {
         if (logType == "f") {
             logEntry = parsedDate + "," + logType + "," + foodName + "," + nutritions + "\n";
         } else if (logType == "c") {
-            logEntry = parsedDate + "," + logType + "," + calories + "\n";
+            logEntry = parsedDate + "," + logType + "," + weight + "\n";
         } else if (logType == "w") {
             logEntry = parsedDate + "," + logType + "," + weight + "\n";
         }
@@ -266,6 +316,14 @@ public class Log {
                 exerciseLog.setLogType("e");
                 bWriter.write(exerciseLog.toCsv());
             }
+            for (Log weightLog : wLog) {
+                weightLog.setLogType("w");
+                bWriter.write(weightLog.toCsv());
+            }
+            for (Log goalLog : cLog) {
+                goalLog.setLogType("c");
+                bWriter.write(goalLog.toCsv());
+            }
             bWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -281,7 +339,6 @@ public class Log {
         } catch (IOException e) {
             e.printStackTrace();
         }
-       
     }
 
     @Override
