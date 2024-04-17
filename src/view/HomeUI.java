@@ -179,9 +179,9 @@ public class HomeUI implements UI {
         VBox root = new VBox(8);
         root.setPadding(new Insets(20, 20, 20, 20));
 
-        info = new Button("Log history");
+        info = new Button("Full Log History");
 
-        weight = new Button("Weight history");
+        weight = new Button("Full Weight History");
 
         addFood = new Button("Add Food");
         addRecipe = new Button("Add Recipe");

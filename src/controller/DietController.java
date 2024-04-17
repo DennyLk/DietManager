@@ -76,6 +76,7 @@ public class DietController {
                         DietModel.updateLog();
                         DietModel.addDailyLog(((HomeUI) ui).getDailyLogCorrectForm().getText());
                         HomeUI.addDailyLog(model.getDailyLog(), HomeUI.getDailyLog(), model.getDailyCalories(), model.getDailyBurned(), model.getDailyWeight(), model.getDailyGoal(), model.getDailyNet(), model.getDailyMargin());
+                        HomeUI.setLogs(model.loadAllLogs(), HomeUI.getLogBox());
                     });
 
             ((HomeUI) ui).getInfo().setOnAction(e -> run(primaryStage, "Info"));
