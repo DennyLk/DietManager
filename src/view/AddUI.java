@@ -128,7 +128,6 @@ public class AddUI implements UI {
         root.setPadding(new Insets(20));
         root.setAlignment(Pos.CENTER);
 
-
         HBox newHbox = new HBox();
         Label lbl = new Label("Add Daily Calorie Goal");
         calorieGoal = new TextField();
@@ -136,7 +135,6 @@ public class AddUI implements UI {
         calorieGoal.setMaxWidth(300);
         calorieGoalDate = new DatePicker();
         logCalorieGoal = new Button("Add Daily Calorie Goal");
-        logCalorieGoal.setMinWidth(180);
         newHbox.setSpacing(10);
         newHbox.setAlignment(Pos.CENTER);
         newHbox.getChildren().addAll(lbl, calorieGoal, calorieGoalDate, logCalorieGoal);
@@ -148,10 +146,9 @@ public class AddUI implements UI {
         weight.setMaxWidth(300);
         weightDate = new DatePicker();
         logWeight = new Button("Log Weight");
-        logWeight.setMinWidth(180);
         weightHBox.setSpacing(10);
         weightHBox.setAlignment(Pos.CENTER);
-        weightHBox.getChildren().addAll(weightLbl,weight,weightDate,logWeight);
+        weightHBox.getChildren().addAll(weightLbl, weight, weightDate, logWeight);
 
         HBox exeBox = new HBox();
         exeBox.setSpacing(10);
@@ -159,39 +156,38 @@ public class AddUI implements UI {
         exerciesNameField = new TextField();
         exerciesNameField.setPromptText("Exercise Name");
         caloriesPerHourField = new TextField();
-        caloriesPerHourField.setPromptText("Calories per Hour");
+        caloriesPerHourField.setPromptText("Calories per Hour per kg");
         addExercise = new Button("Add Exercise");
         exeBox.setAlignment(Pos.CENTER);
         exeBox.getChildren().addAll(exerciseLabel, exerciesNameField, caloriesPerHourField, addExercise);
 
-        Label foodName = new Label("Enter Food Name");
+        Label foodName = new Label("Add Food");
         basicFoodName = new TextField();
-        basicFoodName.setMaxWidth(400);
+        basicFoodName.setMaxWidth(200);
+        basicFoodName.setPromptText("Food Name");
 
-        Label foodCalories = new Label("Enter Food Calories");
         basicFoodCalories = new TextField();
-        basicFoodCalories.setMaxWidth(400);
+        basicFoodCalories.setMaxWidth(100);
+        basicFoodCalories.setPromptText("Calories");
 
-        Label foodProteins = new Label("Enter Food Proteins");
         basicFoodProteins = new TextField();
-        basicFoodProteins.setMaxWidth(400);
+        basicFoodProteins.setMaxWidth(100);
+        basicFoodProteins.setPromptText("Proteins");
 
-        Label foodCarbs = new Label("Enter Food Carbs");
         basicFoodCarbs = new TextField();
-        basicFoodCarbs.setMaxWidth(400);
+        basicFoodCarbs.setMaxWidth(100);
+        basicFoodCarbs.setPromptText("Carbs");
 
-        Label foodFats = new Label("Enter Food Fats");
         basicFoodFats = new TextField();
-        basicFoodFats.setMaxWidth(400);
+        basicFoodFats.setMaxWidth(100);
+        basicFoodFats.setPromptText("Fats");
 
         addButton = new Button("Add Food");
-        addButton.setMinWidth(180);
-        VBox inputLayout = new VBox();
-        inputLayout.getChildren().addAll(foodName, basicFoodName, foodCalories, basicFoodCalories, foodProteins,
-                basicFoodProteins, foodCarbs, basicFoodCarbs, foodFats, basicFoodFats, addButton);
+        HBox inputLayout = new HBox();
+        inputLayout.getChildren().addAll(foodName, basicFoodName, basicFoodCalories,
+                basicFoodProteins, basicFoodCarbs, basicFoodFats, addButton);
         inputLayout.setAlignment(Pos.CENTER);
-        inputLayout.setSpacing(5);
-        inputLayout.setPadding(new Insets(10));
+        inputLayout.setSpacing(10);
 
         HBox recipeLabels = new HBox();
         Label lblName = new Label("Add recipe name:");
@@ -249,9 +245,12 @@ public class AddUI implements UI {
             }
         });
 
+
+        VBox recipe = new VBox();
         Label recipeLabel = new Label("Recipe:");
         recipeInput = new TextField();
         recipeInput.setEditable(false);
+        recipeInput.setMinWidth(300);
 
         HBox recipeLabelLayout = new HBox();
         recipeLabelLayout.setAlignment(Pos.CENTER);
@@ -268,12 +267,16 @@ public class AddUI implements UI {
 
         backBtn = new Button("Back");
 
+        recipe.getChildren().addAll(recipeLabels,
+        recipeBoxes, recipeButton, recipeLabelLayout, recipeInputLayout);
+
         root.getChildren().addAll(newHbox,
-        weightHBox, exeBox, inputLayout, recipeLabels,
-                recipeBoxes, recipeButton, recipeLabelLayout, recipeInputLayout,
+                weightHBox, exeBox, inputLayout, recipe,
                 backBtn);
 
-        scene = new Scene(root, 1000, 730);
+        root.setSpacing(50);
+
+        scene = new Scene(root, 1000, 600);
         stage.setScene(scene);
         stage.show();
     }
