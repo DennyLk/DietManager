@@ -2,6 +2,8 @@ package controller;
 
 import java.time.LocalDate;
 
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import model.DietModel;
 import model.Log;
@@ -43,6 +45,7 @@ public class DietController {
                         DietModel.addDailyLog(((HomeUI) ui).getDailyLogCorrectForm().getText());
                         HomeUI.addDailyLog(model.getDailyLog(), HomeUI.getDailyLog(), model.getDailyCalories(), model.getDailyBurned(), model.getDailyWeight(), model.getDailyGoal(), model.getDailyNet(), model.getDailyMargin());
                         HomeUI.setLogs(model.loadAllLogs(), HomeUI.getLogBox());
+                        alert(AlertType.CONFIRMATION, "Log successfully deleted");
                     });
             ((HomeUI) ui).getDailyButton()
                     .setOnAction(e -> {
@@ -63,6 +66,7 @@ public class DietController {
                         DietModel.addDailyLog(((HomeUI) ui).getDailyLogCorrectForm().getText());
                         HomeUI.addDailyLog(model.getDailyLog(), HomeUI.getDailyLog(), model.getDailyCalories(), model.getDailyBurned(), model.getDailyWeight(), model.getDailyGoal(), model.getDailyNet(), model.getDailyMargin());
                         HomeUI.setLogs(model.loadAllLogs(), HomeUI.getLogBox());
+                        alert(AlertType.CONFIRMATION, "Exercise successfully logged");
                     });  
             ((HomeUI) ui).getLog().setOnAction(
                     e -> {
@@ -72,11 +76,11 @@ public class DietController {
                             DietModel.logSelectedFood(HomeUI.getFoodsBox().getSelectionModel().getSelectedItem(),
                                     HomeUI.getCertainDateField().getText());
                         }
-
                         DietModel.updateLog();
                         DietModel.addDailyLog(((HomeUI) ui).getDailyLogCorrectForm().getText());
                         HomeUI.addDailyLog(model.getDailyLog(), HomeUI.getDailyLog(), model.getDailyCalories(), model.getDailyBurned(), model.getDailyWeight(), model.getDailyGoal(), model.getDailyNet(), model.getDailyMargin());
                         HomeUI.setLogs(model.loadAllLogs(), HomeUI.getLogBox());
+                        alert(AlertType.CONFIRMATION, "Food successfully logged");
                     });
 
             ((HomeUI) ui).getInfo().setOnAction(e -> run(primaryStage, "Info"));
@@ -104,17 +108,23 @@ public class DietController {
                 if (AddUI.getCalorieGoalDate().getValue() != null) {
                     DietModel.logCalorieGoal(AddUI.getCalorieGoal().getText(),
                             AddUI.getCalorieGoalDate().getValue().toString());
+                    alert(AlertType.CONFIRMATION, "Calorie goal successfully added");
                 } else {
                     DietModel.logCalorieGoal(AddUI.getCalorieGoal().getText());
+                    alert(AlertType.CONFIRMATION, "Calorie goal successfully added");
                 }
             });
-            ((AddUI) ui).getAddExercise().setOnAction(e -> DietModel.addExercise(((AddUI) ui).getExerciesNameField().getText(),Double.parseDouble(((AddUI) ui).getCaloriesPerHourField().getText())));
+            ((AddUI) ui).getAddExercise().setOnAction(e -> {
+                DietModel.addExercise(((AddUI) ui).getExerciesNameField().getText(),Double.parseDouble(((AddUI) ui).getCaloriesPerHourField().getText()));
+            });
             ((AddUI) ui).getLogWeight().setOnAction(e -> {
                 if (AddUI.getWeightDate().getValue() != null) {
                     DietModel.logSelectedWeight(AddUI.getWeight().getText(),
                             AddUI.getWeightDate().getValue().toString());
+                    alert(AlertType.CONFIRMATION, "Weight successfully added");
                 } else {
                     DietModel.logSelectedWeight(AddUI.getWeight().getText());
+                    alert(AlertType.CONFIRMATION, "Weight successfully added");
                 }
             });
 
@@ -122,6 +132,7 @@ public class DietController {
                     .setOnAction(e -> {
                         DietModel.addFood(((AddUI) ui).addBasicFood());
                         AddUI.setFoods(model.getFoods(), AddUI.getRecipeBox());
+                        alert(AlertType.CONFIRMATION, "Food successfully added");
                     });
 
             ((AddUI) ui).getAddRecipeButton()
@@ -129,7 +140,13 @@ public class DietController {
                         DietModel.addRecipe(AddUI.getRecipeInput().getText());
                         AddUI.getRecipeInput().setText("");
                         AddUI.setFoods(model.getFoods(), AddUI.getRecipeBox());
+                        alert(AlertType.CONFIRMATION, "Recipe successfully added");
                     });
         }
+    }
+
+    public void alert(AlertType type, String message){
+        Alert alert = new Alert(type, message);
+        alert.showAndWait();
     }
 }

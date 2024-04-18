@@ -96,6 +96,8 @@ public class Exercise {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        Alert alert = new Alert(AlertType.CONFIRMATION, "Exercise successfully added");
+        alert.showAndWait();
     }
 
     public boolean checkNameUnique(String name){
