@@ -183,9 +183,9 @@ public class HomeUI implements UI {
 
         weight = new Button("Full Weight History");
 
-        addFood = new Button("Add Food");
-        addRecipe = new Button("Add Recipe");
-        addExercise = new Button("Add Exercise");
+        addFood = new Button("Create Food");
+        addRecipe = new Button("Create Recipe");
+        addExercise = new Button("Create Exercise");
         addWeight = new Button("Log Weight");
         dailyCals = new Button("Add Calorie Goal");
 
@@ -204,7 +204,7 @@ public class HomeUI implements UI {
         foodsBox.setEditable(false);
         logCertainDate = new DatePicker();
 
-        log = new Button("Log");
+        log = new Button("Log Food");
 
         hBox1.getChildren().addAll(foodsBox, logCertainDate, log);
         hBox1.setSpacing(10);
